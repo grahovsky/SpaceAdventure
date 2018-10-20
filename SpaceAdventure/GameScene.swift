@@ -41,7 +41,8 @@ class GameScene: SKScene {
             self.addChild(asteroid)
         }
         
-        let asteroidCreationDelay = SKAction.wait(forDuration: 1.0, withRange: 0.5)
+        let asteroidsPerSecond: Double = 1;
+        let asteroidCreationDelay = SKAction.wait(forDuration: 1.0 / asteroidsPerSecond, withRange: 0.5)
         let asteroidSequenceAction = SKAction.sequence([asteroidCreateAction, asteroidCreationDelay])
         let asteroidRunAction = SKAction.repeatForever(asteroidSequenceAction)
         
@@ -57,19 +58,35 @@ class GameScene: SKScene {
             let touchLocation = touch.location(in: self)
             
             // создаем действие и применяем его
-            let moveAction = SKAction.move(to: touchLocation, duration: 1.0)
+            
+            let distance = distanceCalc(a: spaceShip.position, b: touchLocation)
+            let speed: CGFloat = 200
+            let time = timeToTravelDistance(distance: distance, speed: speed)
+    
+            let moveAction = SKAction.move(to: touchLocation, duration: time)
             
             spaceShip.run(moveAction)
         }
         
     }
     
+    func distanceCalc(a: CGPoint, b: CGPoint) -> CGFloat {
+        return sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2))
+    }
+    
+    func timeToTravelDistance(distance: CGFloat, speed: CGFloat) -> TimeInterval {
+        let time = distance/speed
+        return TimeInterval(time)
+    }
+    
     func createAnAsteroid() -> SKSpriteNode {
         
         let asteroid = SKSpriteNode(imageNamed: "asteroid2")
         
-        asteroid.xScale = 0.5
-        asteroid.yScale = 0.5
+        let randomScale = CGFloat.random(in: 0.2...0.5)
+        
+        asteroid.xScale = randomScale
+        asteroid.yScale = randomScale
         
         let width = (frame.size.width)/2
         let random = CGFloat.random(in: -width...width)
