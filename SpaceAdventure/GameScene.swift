@@ -83,17 +83,20 @@ class GameScene: SKScene {
         
         let asteroid = SKSpriteNode(imageNamed: "asteroid2")
         
+        //меняем масштаб астероида в пределах 0.2 - 0.5 от исходного размера
         let randomScale = CGFloat.random(in: 0.2...0.5)
-        
         asteroid.xScale = randomScale
         asteroid.yScale = randomScale
         
+        //устанавливаем позицию образования астероидов
         let width = (frame.size.width)/2
         let random = CGFloat.random(in: -width...width)
         asteroid.position.x = random;
         asteroid.position.y = frame.size.height/2 + asteroid.size.height
         
+        //присваиваем астероиду физическое тело
         asteroid.physicsBody = SKPhysicsBody(texture: asteroid.texture!, size: asteroid.size)
+        asteroid.name = "asteroid"
         
         return asteroid
         
@@ -106,6 +109,14 @@ class GameScene: SKScene {
         
     }
     
+    override func didFinishUpdate() {
+        enumerateChildNodes(withName: "asteroid") { (asteroid: SKNode, stop: UnsafeMutablePointer<ObjCBool>) in
+            
+            if asteroid.position.y < -(self.frame.size.height/2 + asteroid.frame.height) {
+                asteroid.removeFromParent()
+            }
+        }
+    }
     
     
     
