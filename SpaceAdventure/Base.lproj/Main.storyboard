@@ -16,13 +16,35 @@
                     <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ct8-C2-EPx">
+                                <rect key="frame" x="316" y="38" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ct8-C2-EPx" secondAttribute="height" multiplier="1:1" id="wA7-WL-Pdx"/>
+                                </constraints>
+                                <state key="normal" image="pauseBtn"/>
+                                <connections>
+                                    <action selector="pauseButtonPressedWithSender:" destination="BV1-FR-VrT" eventType="touchUpInside" id="ABK-Ls-8YE"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ct8-C2-EPx" firstAttribute="top" secondItem="4qk-I5-YsI" secondAttribute="top" constant="18" id="EoQ-x2-Ggl"/>
+                            <constraint firstItem="4qk-I5-YsI" firstAttribute="trailing" secondItem="ct8-C2-EPx" secondAttribute="trailing" constant="19" id="NHq-9S-3cR"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
                     </view>
+                    <connections>
+                        <outlet property="pauseButton" destination="ct8-C2-EPx" id="2Ka-9T-LYH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="121.88905547226388"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="pauseBtn" width="40" height="40"/>
+    </resources>
 </document>
