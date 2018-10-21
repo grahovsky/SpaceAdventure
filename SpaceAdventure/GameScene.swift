@@ -11,10 +11,18 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    //создаем свойство
+    let spaceShipCategory: UInt32 = 0x1 << 0
+    let asteroidCategory: UInt32 = 0x1 << 1
+    
+    //создаем свойства
     var spaceShip: SKSpriteNode!
+    var score = 0
+    var scoreLabel: SKLabelNode!
     
     override func didMove(to view: SKView) {
+        
+        physicsWorld.contactDelegate = self
+        physicsWorld.gravity = CGVector(dx: 0.0, dy: -0.5)
         
         //создаем фон
         let width = UIScreen.main.bounds.size.width
@@ -33,6 +41,10 @@ class GameScene: SKScene {
         // добавляем
         spaceShip.physicsBody = SKPhysicsBody(texture: spaceShip.texture!, size: spaceShip.size)
         spaceShip.physicsBody?.isDynamic = false
+        spaceShip.physicsBody?.categoryBitMask = spaceShipCategory
+        spaceShip.physicsBody?.collisionBitMask = asteroidCategory | asteroidCategory
+        spaceShip.physicsBody?.contactTestBitMask = asteroidCategory
+        
         addChild(spaceShip)
         
         //Генерируем астероиды
@@ -47,6 +59,17 @@ class GameScene: SKScene {
         let asteroidRunAction = SKAction.repeatForever(asteroidSequenceAction)
         
         run(asteroidRunAction)
+        
+        scoreLabel = SKLabelNode(text: "Score: \(score)")
+        scoreLabel.fontSize = 30
+        scoreLabel.fontName = "Futura"
+        scoreLabel.fontColor = SKColor.yellow
+        scoreLabel.position = CGPoint(x: 0, y: frame.size.height/2 - scoreLabel.calculateAccumulatedFrame().height - 15)
+        addChild(scoreLabel)
+        
+        backgound.zPosition = 0
+        spaceShip.zPosition = 1
+        scoreLabel.zPosition = 3
         
     }
     
@@ -98,6 +121,12 @@ class GameScene: SKScene {
         asteroid.physicsBody = SKPhysicsBody(texture: asteroid.texture!, size: asteroid.size)
         asteroid.name = "asteroid"
         
+        asteroid.physicsBody?.categoryBitMask = asteroidCategory
+        asteroid.physicsBody?.collisionBitMask = spaceShipCategory
+        asteroid.physicsBody?.contactTestBitMask = spaceShipCategory
+        
+        asteroid.zPosition = 2
+        
         return asteroid
         
     }
@@ -112,12 +141,32 @@ class GameScene: SKScene {
     override func didFinishUpdate() {
         enumerateChildNodes(withName: "asteroid") { (asteroid: SKNode, stop: UnsafeMutablePointer<ObjCBool>) in
             
-            if asteroid.position.y < -(self.frame.size.height/2 + asteroid.frame.height) {
+            if asteroid.position.y < -(self.frame.size.height/2 + asteroid.calculateAccumulatedFrame().height) {
                 asteroid.removeFromParent()
+                
+                self.score += 1
+                self.scoreLabel.text = "Score: \(self.score)"
+                
             }
         }
     }
     
+}
+
+extension GameScene: SKPhysicsContactDelegate {
+ 
+    func didBegin(_ contact: SKPhysicsContact) {
+        
+        if contact.bodyA.categoryBitMask == spaceShipCategory && contact.bodyB.categoryBitMask == asteroidCategory ||
+            contact.bodyA.categoryBitMask == asteroidCategory && contact.bodyB.categoryBitMask == spaceShipCategory {
+            self.score = 0
+            self.scoreLabel.text = "Score: \(self.score)"
+        }
+        
+    }
     
+    func didEnd(_ contact: SKPhysicsContact) {
+        
+    }
     
 }
