@@ -16,8 +16,11 @@ class GameScene: SKScene {
     
     //создаем свойства
     var spaceShip: SKSpriteNode!
+    var background: SKSpriteNode!
+    
     var score = 0
     var scoreLabel: SKLabelNode!
+    
     
     override func didMove(to view: SKView) {
         
@@ -28,10 +31,10 @@ class GameScene: SKScene {
         let width = UIScreen.main.bounds.size.width
         let height = UIScreen.main.bounds.size.height
         
-        let backgound = SKSpriteNode(imageNamed: "background")
-        backgound.position = CGPoint(x: 0, y: 0)
-        backgound.size = CGSize(width: width, height: height)
-        addChild(backgound)
+        background = SKSpriteNode(imageNamed: "background")
+        background.position = CGPoint(x: 0, y: 0)
+        background.size = CGSize(width: width + 8, height: height + 6)
+        addChild(background)
         
         //Создаем космический корабль
         // инициализируем свойство
@@ -67,7 +70,7 @@ class GameScene: SKScene {
         scoreLabel.position = CGPoint(x: 0, y: frame.size.height/2 - scoreLabel.calculateAccumulatedFrame().height - 15)
         addChild(scoreLabel)
         
-        backgound.zPosition = 0
+        background.zPosition = 0
         spaceShip.zPosition = 1
         scoreLabel.zPosition = 3
         
@@ -76,7 +79,7 @@ class GameScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         if let touch = touches.first {
-          
+            
             // определяем точку прикосновения с экраном
             let touchLocation = touch.location(in: self)
             
@@ -85,10 +88,13 @@ class GameScene: SKScene {
             let distance = distanceCalc(a: spaceShip.position, b: touchLocation)
             let speed: CGFloat = 200
             let time = timeToTravelDistance(distance: distance, speed: speed)
-    
-            let moveAction = SKAction.move(to: touchLocation, duration: time)
             
+            let moveAction = SKAction.move(to: touchLocation, duration: time)
             spaceShip.run(moveAction)
+            
+            let bgMoveAction = SKAction.move(to: CGPoint(x: -touchLocation.x / 50, y: -touchLocation.y / 50), duration: time)
+            background.run(bgMoveAction)
+            
         }
         
     }
