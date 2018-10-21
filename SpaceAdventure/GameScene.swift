@@ -24,6 +24,9 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         
+        //делаем уникальный сид для рандомной функции drand48()
+        srand48(time(nil))
+        
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0.0, dy: -0.5)
         
@@ -90,6 +93,7 @@ class GameScene: SKScene {
             let time = timeToTravelDistance(distance: distance, speed: speed)
             
             let moveAction = SKAction.move(to: touchLocation, duration: time)
+            moveAction.timingMode = SKActionTimingMode.easeInEaseOut
             spaceShip.run(moveAction)
             
             let bgMoveAction = SKAction.move(to: CGPoint(x: -touchLocation.x / 50, y: -touchLocation.y / 50), duration: time)
@@ -110,7 +114,9 @@ class GameScene: SKScene {
     
     func createAnAsteroid() -> SKSpriteNode {
         
-        let asteroid = SKSpriteNode(imageNamed: "asteroid2")
+        let asteroidImageArray = ["asteroid", "asteroid2"]
+        let randomIndex = Int.random(in: 0...asteroidImageArray.count-1)
+        let asteroid = SKSpriteNode(imageNamed: asteroidImageArray[randomIndex])
         
         //меняем масштаб астероида в пределах 0.2 - 0.5 от исходного размера
         let randomScale = CGFloat.random(in: 0.2...0.5)
@@ -132,6 +138,12 @@ class GameScene: SKScene {
         asteroid.physicsBody?.contactTestBitMask = spaceShipCategory
         
         asteroid.zPosition = 2
+        
+        //drand48 - возвращает значение от 0 до 1
+        asteroid.physicsBody?.angularVelocity = CGFloat(drand48() * 2 - 1) * 3
+        let asteroidSpeedX: CGFloat = 100
+        asteroid.physicsBody?.velocity.dx = CGFloat(drand48() * 2 - 1) * asteroidSpeedX
+        
         
         return asteroid
         
