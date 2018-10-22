@@ -30,6 +30,7 @@ class GameScene: SKScene {
         gameIsPaused = true
         
         self.asteroidLayer.isPaused = true
+        self.spaceShip.isPaused = true
         physicsWorld.speed = 0
         
     }
@@ -49,6 +50,7 @@ class GameScene: SKScene {
         gameIsPaused = false
         
         self.asteroidLayer.isPaused = false
+        self.spaceShip.isPaused = false
         physicsWorld.speed = 1
         
     }

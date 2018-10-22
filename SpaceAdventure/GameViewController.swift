@@ -18,12 +18,19 @@ class GameViewController: UIViewController {
     @IBOutlet weak var pauseButton: UIButton!
     
     @IBAction func pauseButtonPressed(sender: AnyObject) {
+        
         gameScene.pauseButtonPressed(sender: sender)
+
         if gameScene.gameIsPaused {
             pauseButton.setImage(UIImage(named: "playBtn"), for: .normal)
         } else {
             pauseButton.setImage(UIImage(named: "pauseBtn"), for: .normal)
         }
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        
     }
     
     override func viewDidLoad() {
@@ -39,7 +46,7 @@ class GameViewController: UIViewController {
                 
                 // Present the scene
                 view.presentScene(scene)
-            
+                
                 gameScene = scene as? GameScene
             }
             
