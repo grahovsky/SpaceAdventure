@@ -83,17 +83,67 @@
                                     <constraint firstAttribute="width" secondItem="tG7-Iy-k7X" secondAttribute="height" multiplier="4" id="pkm-qa-lV0"/>
                                 </constraints>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="soundImage" translatesAutoresizingMaskIntoConstraints="NO" id="qCv-Nb-pCm">
+                                <rect key="frame" x="37.5" y="531" width="178" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="178" id="1xZ-JU-lpV"/>
+                                    <constraint firstAttribute="width" secondItem="qCv-Nb-pCm" secondAttribute="height" multiplier="89:21" id="dP6-5S-S6g"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="musicImage" translatesAutoresizingMaskIntoConstraints="NO" id="EEe-2E-h56">
+                                <rect key="frame" x="37.5" y="592" width="149" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="149" id="OXe-sz-v7y"/>
+                                    <constraint firstAttribute="width" secondItem="EEe-2E-h56" secondAttribute="height" multiplier="149:37" id="xgv-FB-kBe"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XMZ-Er-9T1">
+                                <rect key="frame" x="269.5" y="531" width="68" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="XMZ-Er-9T1" secondAttribute="height" multiplier="34:21" id="IKn-wK-QfG"/>
+                                    <constraint firstAttribute="width" constant="68" id="e1g-bZ-cDR"/>
+                                </constraints>
+                                <state key="normal" image="onImage"/>
+                                <connections>
+                                    <action selector="soundButtonPressed:" destination="1eQ-7u-aot" eventType="touchUpInside" id="Wig-tX-h12"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="opi-1Z-bX7">
+                                <rect key="frame" x="269.5" y="587" width="68" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="68" id="NGW-Jg-nJE"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="68" id="WEP-YD-b3Z"/>
+                                    <constraint firstAttribute="width" secondItem="opi-1Z-bX7" secondAttribute="height" multiplier="34:21" id="fqv-zP-fdN"/>
+                                </constraints>
+                                <state key="normal" image="onImage"/>
+                                <connections>
+                                    <action selector="musicButtonPressed:" destination="1eQ-7u-aot" eventType="touchUpInside" id="HHy-1A-gvy"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.59947559931506844" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="EEe-2E-h56" firstAttribute="leading" secondItem="qCv-Nb-pCm" secondAttribute="leading" id="18y-hX-46N"/>
                             <constraint firstItem="HV1-v4-lXu" firstAttribute="centerX" secondItem="1Bf-pq-FPL" secondAttribute="centerX" id="1vO-EK-5ef"/>
                             <constraint firstItem="tG7-Iy-k7X" firstAttribute="centerX" secondItem="1Bf-pq-FPL" secondAttribute="centerX" id="3IO-CU-DVl"/>
+                            <constraint firstItem="opi-1Z-bX7" firstAttribute="top" secondItem="XMZ-Er-9T1" secondAttribute="bottom" constant="14" id="5fz-X4-giL"/>
+                            <constraint firstItem="qCv-Nb-pCm" firstAttribute="top" secondItem="naw-Jh-PpI" secondAttribute="bottom" constant="101" id="DJe-ZD-NqW"/>
                             <constraint firstItem="tG7-Iy-k7X" firstAttribute="top" secondItem="1Bf-pq-FPL" secondAttribute="top" constant="55" id="IiD-Hu-2Ty"/>
+                            <constraint firstItem="EEe-2E-h56" firstAttribute="top" secondItem="qCv-Nb-pCm" secondAttribute="bottom" constant="19" id="JZc-kj-brc"/>
+                            <constraint firstItem="XMZ-Er-9T1" firstAttribute="trailing" secondItem="tG7-Iy-k7X" secondAttribute="trailing" id="MED-i6-uKA"/>
+                            <constraint firstItem="XMZ-Er-9T1" firstAttribute="top" secondItem="okX-k5-obS" secondAttribute="bottom" constant="101" id="TCr-lB-hYw"/>
+                            <constraint firstItem="opi-1Z-bX7" firstAttribute="width" secondItem="opi-1Z-bX7" secondAttribute="height" multiplier="34:21" id="TjT-lz-QU7"/>
+                            <constraint firstItem="qCv-Nb-pCm" firstAttribute="leading" secondItem="tG7-Iy-k7X" secondAttribute="leading" id="Y6w-bw-gUY"/>
                             <constraint firstItem="HV1-v4-lXu" firstAttribute="top" secondItem="tG7-Iy-k7X" secondAttribute="bottom" constant="200" id="f3U-HV-Fif"/>
                             <constraint firstItem="tG7-Iy-k7X" firstAttribute="width" secondItem="O6F-ev-J1e" secondAttribute="width" multiplier="0.8" id="k8C-mi-2La"/>
+                            <constraint firstItem="opi-1Z-bX7" firstAttribute="trailing" secondItem="tG7-Iy-k7X" secondAttribute="trailing" id="sa1-BU-THr"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1Bf-pq-FPL"/>
                     </view>
+                    <connections>
+                        <outlet property="musicButton" destination="opi-1Z-bX7" id="S2T-se-fyx"/>
+                        <outlet property="soundButton" destination="XMZ-Er-9T1" id="NoA-Gk-BjD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wOi-2v-9Vn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -105,6 +155,9 @@
         <image name="PausedTitle" width="400" height="98"/>
         <image name="PlayButton" width="80" height="80"/>
         <image name="StoreButton" width="80" height="80"/>
+        <image name="musicImage" width="334.5" height="98"/>
+        <image name="onImage" width="145" height="89"/>
         <image name="pauseBtn" width="40" height="40"/>
+        <image name="soundImage" width="382" height="93.5"/>
     </resources>
 </document>

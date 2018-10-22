@@ -37,6 +37,18 @@ class GameScene: SKScene {
     //создаем проигрыватель
     var musicPlayer: AVAudioPlayer!
     
+    //переменные для отображения звука и музыки
+    var musicOn: Bool = true
+    var soundOn: Bool = true
+    
+    func musicOnOrOff() {
+        if musicOn {
+            musicPlayer.play()
+        } else {
+            musicPlayer.stop()
+        }
+    }
+    
     //функции паузы/снятия паузы/резета
     func pauseTheGame() {
         
@@ -47,7 +59,7 @@ class GameScene: SKScene {
         self.starsLayer.isPaused = true
         physicsWorld.speed = 0
         
-        musicPlayer.stop()
+        musicOnOrOff()
         
     }
     
@@ -60,7 +72,7 @@ class GameScene: SKScene {
         self.starsLayer.isPaused = false
         physicsWorld.speed = 1
         
-        musicPlayer.play()
+        musicOnOrOff()
         
     }
     
@@ -165,7 +177,7 @@ class GameScene: SKScene {
         scoreLabel = SKLabelNode(text: "Score: \(score)")
         scoreLabel.fontSize = 30
         scoreLabel.fontName = "Futura"
-        scoreLabel.fontColor = SKColor.yellow
+        scoreLabel.fontColor = #colorLiteral(red: 0.7655060279, green: 0.3717384464, blue: 0.1646142797, alpha: 1)
         scoreLabel.position = CGPoint(x: 0, y: frame.size.height/2 - scoreLabel.calculateAccumulatedFrame().height - 15)
         addChild(scoreLabel)
         
@@ -181,7 +193,7 @@ class GameScene: SKScene {
     func playMusic() {
         let musicPath = Bundle.main.url(forResource: "backgroundMusic", withExtension: "m4a")!
         musicPlayer = try! AVAudioPlayer(contentsOf: musicPath)
-        musicPlayer.play()
+        musicOnOrOff()
         
         musicPlayer.numberOfLoops = -1
         musicPlayer.volume = 0.3
@@ -294,8 +306,10 @@ extension GameScene: SKPhysicsContactDelegate {
             self.scoreLabel.text = "Score: \(self.score)"
         }
        
-        let hitSoundAction = SKAction.playSoundFileNamed("hitSound", waitForCompletion: true)
-        run(hitSoundAction)
+        if soundOn {
+            let hitSoundAction = SKAction.playSoundFileNamed("hitSound", waitForCompletion: true)
+            run(hitSoundAction)
+        }
     }
     
     func didEnd(_ contact: SKPhysicsContact) {
