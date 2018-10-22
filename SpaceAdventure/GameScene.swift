@@ -21,16 +21,23 @@ class GameScene: SKScene {
     var score = 0
     var scoreLabel: SKLabelNode!
     
+    //слой астероидов
     var asteroidLayer: SKNode!
     
+    //слой звёзд
+    var starsLayer: SKNode!
+    
+    //индикатор паузы игры
     var gameIsPaused: Bool = false
     
+    //функции паузы/снятия паузы/резета
     func pauseTheGame() {
         
         gameIsPaused = true
         
         self.asteroidLayer.isPaused = true
         self.spaceShip.isPaused = true
+        self.starsLayer.isPaused = true
         physicsWorld.speed = 0
         
     }
@@ -51,6 +58,7 @@ class GameScene: SKScene {
         
         self.asteroidLayer.isPaused = false
         self.spaceShip.isPaused = false
+        self.starsLayer.isPaused = false
         physicsWorld.speed = 1
         
     }
@@ -85,6 +93,19 @@ class GameScene: SKScene {
         background.position = CGPoint(x: 0, y: 0)
         background.size = CGSize(width: width + 8, height: height + 6)
         addChild(background)
+        
+        //создаем слой звёзд
+        let starsPath = Bundle.main.path(forResource: "stars", ofType: "sks")!
+        let starsEmitter = NSKeyedUnarchiver.unarchiveObject(withFile: starsPath) as! SKEmitterNode
+        
+        starsEmitter.position = CGPoint(x: 0, y: frame.size.height/2)
+        starsEmitter.particlePositionRange.dx = frame.size.width
+        starsEmitter.advanceSimulationTime(10)
+        
+        starsLayer = SKNode()
+        starsLayer.zPosition = 1
+        starsLayer.addChild(starsEmitter)
+        addChild(starsLayer)
         
         //Создаем космический корабль
         // инициализируем свойство
@@ -131,8 +152,8 @@ class GameScene: SKScene {
         addChild(scoreLabel)
         
         background.zPosition = 0
-        spaceShip.zPosition = 1
-        scoreLabel.zPosition = 3
+        spaceShip.zPosition = 3
+        scoreLabel.zPosition = 4
         
     }
     
