@@ -21,6 +21,9 @@ class GameScene: SKScene {
     var score = 0
     var scoreLabel: SKLabelNode!
     
+    //слой космического корабля
+    var spaceShipLayer: SKNode!
+    
     //слой астероидов
     var asteroidLayer: SKNode!
     
@@ -36,7 +39,7 @@ class GameScene: SKScene {
         gameIsPaused = true
         
         self.asteroidLayer.isPaused = true
-        self.spaceShip.isPaused = true
+        self.spaceShipLayer.isPaused = true
         self.starsLayer.isPaused = true
         physicsWorld.speed = 0
         
@@ -57,7 +60,7 @@ class GameScene: SKScene {
         gameIsPaused = false
         
         self.asteroidLayer.isPaused = false
-        self.spaceShip.isPaused = false
+        self.spaceShipLayer.isPaused = false
         self.starsLayer.isPaused = false
         physicsWorld.speed = 1
         
@@ -99,8 +102,8 @@ class GameScene: SKScene {
         let starsEmitter = NSKeyedUnarchiver.unarchiveObject(withFile: starsPath) as! SKEmitterNode
         
         starsEmitter.position = CGPoint(x: 0, y: frame.size.height/2)
-        starsEmitter.particlePositionRange.dx = frame.size.width
-        starsEmitter.advanceSimulationTime(10)
+        starsEmitter.particlePositionRange.dx = frame.size.width + 10
+        starsEmitter.advanceSimulationTime(100)
         
         starsLayer = SKNode()
         starsLayer.zPosition = 1
@@ -124,8 +127,25 @@ class GameScene: SKScene {
         let colorSequenceAnimation = SKAction.sequence([colorAction1, colorAction2])
         let colorActionRepeat = SKAction.repeatForever(colorSequenceAnimation)
         spaceShip.run(colorActionRepeat)
+
         
-        addChild(spaceShip)
+        //создаем слой космического корабля
+        spaceShipLayer = SKNode()
+        spaceShipLayer.addChild(spaceShip)
+        spaceShipLayer.zPosition = 3
+        spaceShip.zPosition = 1
+        spaceShipLayer.position = CGPoint(x: 0, y: 0)
+        
+        addChild(spaceShipLayer)
+        
+        //создаем огонь
+        let firePath = Bundle.main.path(forResource: "fire", ofType: "sks")!
+        let fireEmitter = NSKeyedUnarchiver.unarchiveObject(withFile: firePath) as! SKEmitterNode
+        
+        fireEmitter.zPosition = 0
+        fireEmitter.position.y = -50
+        //fireEmitter.targetNode = self
+        spaceShipLayer.addChild(fireEmitter)
         
         //Генерируем астероиды
         asteroidLayer = SKNode()
@@ -152,7 +172,6 @@ class GameScene: SKScene {
         addChild(scoreLabel)
         
         background.zPosition = 0
-        spaceShip.zPosition = 3
         scoreLabel.zPosition = 4
         
     }
@@ -168,16 +187,19 @@ class GameScene: SKScene {
                 
                 // создаем действие и применяем его
                 
-                let distance = distanceCalc(a: spaceShip.position, b: touchLocation)
+                let distance = distanceCalc(a: spaceShipLayer.position, b: touchLocation)
                 let speed: CGFloat = 200
                 let time = timeToTravelDistance(distance: distance, speed: speed)
                 
                 let moveAction = SKAction.move(to: touchLocation, duration: time)
                 moveAction.timingMode = SKActionTimingMode.easeInEaseOut
-                spaceShip.run(moveAction)
+                spaceShipLayer.run(moveAction)
                 
                 let bgMoveAction = SKAction.move(to: CGPoint(x: -touchLocation.x / 50, y: -touchLocation.y / 50), duration: time)
                 background.run(bgMoveAction)
+                
+                let starsMoveAction = SKAction.move(to: CGPoint(x: -touchLocation.x / 40, y: -touchLocation.y / 40), duration: time)
+                starsLayer.run(starsMoveAction)
                 
             }
         }

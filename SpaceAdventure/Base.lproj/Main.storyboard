@@ -43,6 +43,21 @@
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="121.88905547226388"/>
         </scene>
+        <!--Pause View Controller-->
+        <scene sceneID="Hjq-mB-DuL">
+            <objects>
+                <viewController storyboardIdentifier="pauseViewController" id="1eQ-7u-aot" customClass="PauseViewController" customModule="SpaceAdventure" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="O6F-ev-J1e">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.59947559931506844" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="1Bf-pq-FPL"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wOi-2v-9Vn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="844" y="121"/>
+        </scene>
     </scenes>
     <resources>
         <image name="pauseBtn" width="40" height="40"/>

@@ -14,6 +14,7 @@ class GameViewController: UIViewController {
     
     var gameScene: GameScene!
     
+    var pauseViewController: UIViewController!
     
     @IBOutlet weak var pauseButton: UIButton!
     
@@ -27,6 +28,8 @@ class GameViewController: UIViewController {
             pauseButton.setImage(UIImage(named: "pauseBtn"), for: .normal)
         }
         
+        //present(pauseViewController, animated: true, completion: nil)
+        showPauseScreen(viewController: pauseViewController)
     }
     
     override func viewDidLayoutSubviews() {
@@ -35,6 +38,8 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        pauseViewController = storyboard?.instantiateViewController(withIdentifier: "pauseViewController")
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
@@ -55,6 +60,12 @@ class GameViewController: UIViewController {
             view.showsFPS = true
             view.showsNodeCount = true
         }
+    }
+    
+    func showPauseScreen(viewController: UIViewController) {
+        addChild(viewController)
+        view.addSubview(viewController.view)
+        viewController.view.frame = view.bounds
     }
 
     override var shouldAutorotate: Bool {
