@@ -18,6 +18,8 @@
 		B5CEE63B217E1D27003C0B0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5CEE639217E1D27003C0B0D /* Assets.xcassets */; };
 		B5CEE63D217E2A28003C0B0D /* fire.sks in Resources */ = {isa = PBXBuildFile; fileRef = B5CEE63C217E2A28003C0B0D /* fire.sks */; };
 		B5CEE641217E3601003C0B0D /* PauseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CEE640217E3601003C0B0D /* PauseViewController.swift */; };
+		B5CEE648217E4A6A003C0B0D /* backgroundMusic.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B5CEE646217E4A6A003C0B0D /* backgroundMusic.m4a */; };
+		B5CEE649217E4A6A003C0B0D /* hitSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = B5CEE647217E4A6A003C0B0D /* hitSound.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		B5CEE639217E1D27003C0B0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5CEE63C217E2A28003C0B0D /* fire.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = fire.sks; sourceTree = "<group>"; };
 		B5CEE640217E3601003C0B0D /* PauseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseViewController.swift; sourceTree = "<group>"; };
+		B5CEE646217E4A6A003C0B0D /* backgroundMusic.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = backgroundMusic.m4a; sourceTree = "<group>"; };
+		B5CEE647217E4A6A003C0B0D /* hitSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hitSound.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +56,8 @@
 			children = (
 				B5CEE61D217770A0003C0B0D /* SpaceAdventure */,
 				B5CEE61C217770A0003C0B0D /* Products */,
+				B5CEE646217E4A6A003C0B0D /* backgroundMusic.m4a */,
+				B5CEE647217E4A6A003C0B0D /* hitSound.wav */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,13 +74,13 @@
 			children = (
 				B5CEE61E217770A0003C0B0D /* AppDelegate.swift */,
 				B5CEE638217E1D27003C0B0D /* stars.sks */,
-				B5CEE640217E3601003C0B0D /* PauseViewController.swift */,
 				B5CEE639217E1D27003C0B0D /* Assets.xcassets */,
 				B5CEE620217770A0003C0B0D /* GameScene.sks */,
 				B5CEE622217770A0003C0B0D /* Actions.sks */,
 				B5CEE624217770A0003C0B0D /* GameScene.swift */,
 				B5CEE63C217E2A28003C0B0D /* fire.sks */,
 				B5CEE626217770A0003C0B0D /* GameViewController.swift */,
+				B5CEE640217E3601003C0B0D /* PauseViewController.swift */,
 				B5CEE628217770A0003C0B0D /* Main.storyboard */,
 				B5CEE62D217770A2003C0B0D /* LaunchScreen.storyboard */,
 				B5CEE630217770A2003C0B0D /* Info.plist */,
@@ -144,8 +150,10 @@
 				B5CEE621217770A0003C0B0D /* GameScene.sks in Resources */,
 				B5CEE62F217770A2003C0B0D /* LaunchScreen.storyboard in Resources */,
 				B5CEE63D217E2A28003C0B0D /* fire.sks in Resources */,
+				B5CEE648217E4A6A003C0B0D /* backgroundMusic.m4a in Resources */,
 				B5CEE63A217E1D27003C0B0D /* stars.sks in Resources */,
 				B5CEE63B217E1D27003C0B0D /* Assets.xcassets in Resources */,
+				B5CEE649217E4A6A003C0B0D /* hitSound.wav in Resources */,
 				B5CEE623217770A0003C0B0D /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

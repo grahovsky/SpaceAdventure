@@ -109,6 +109,12 @@ extension GameViewController: PauseViewControllerDelegate {
     func pauseViewControllerPlayButtonPressed(viewConroller: PauseViewController) {
         hidePauseScreen(viewController: pauseViewController)
         gameScene.unpauseTheGame()
+        
+        if gameScene.gameIsPaused {
+            pauseButton.setImage(UIImage(named: "playBtn"), for: .normal)
+        } else {
+            pauseButton.setImage(UIImage(named: "pauseBtn"), for: .normal)
+        }
     }
     
     func pauseViewControllerStoreButtonPressed(viewConroller: PauseViewController) {

@@ -8,6 +8,7 @@
 
 import SpriteKit
 import GameplayKit
+import AVFoundation
 
 class GameScene: SKScene {
     
@@ -33,6 +34,9 @@ class GameScene: SKScene {
     //индикатор паузы игры
     var gameIsPaused: Bool = false
     
+    //создаем проигрыватель
+    var musicPlayer: AVAudioPlayer!
+    
     //функции паузы/снятия паузы/резета
     func pauseTheGame() {
         
@@ -42,6 +46,8 @@ class GameScene: SKScene {
         self.spaceShipLayer.isPaused = true
         self.starsLayer.isPaused = true
         physicsWorld.speed = 0
+        
+        musicPlayer.stop()
         
     }
     
@@ -53,6 +59,8 @@ class GameScene: SKScene {
         self.spaceShipLayer.isPaused = false
         self.starsLayer.isPaused = false
         physicsWorld.speed = 1
+        
+        musicPlayer.play()
         
     }
     
@@ -112,11 +120,11 @@ class GameScene: SKScene {
         spaceShip.physicsBody?.collisionBitMask = asteroidCategory | asteroidCategory
         spaceShip.physicsBody?.contactTestBitMask = asteroidCategory
         
-        let colorAction1 = SKAction.colorize(with: UIColor.yellow, colorBlendFactor: 1, duration: 1)
-        let colorAction2 = SKAction.colorize(with: UIColor.white, colorBlendFactor: 0, duration: 1)
-        let colorSequenceAnimation = SKAction.sequence([colorAction1, colorAction2])
-        let colorActionRepeat = SKAction.repeatForever(colorSequenceAnimation)
-        spaceShip.run(colorActionRepeat)
+//        let colorAction1 = SKAction.colorize(with: UIColor.yellow, colorBlendFactor: 1, duration: 1)
+//        let colorAction2 = SKAction.colorize(with: UIColor.white, colorBlendFactor: 0, duration: 1)
+//        let colorSequenceAnimation = SKAction.sequence([colorAction1, colorAction2])
+//        let colorActionRepeat = SKAction.repeatForever(colorSequenceAnimation)
+//        spaceShip.run(colorActionRepeat)
 
         
         //создаем слой космического корабля
@@ -164,6 +172,19 @@ class GameScene: SKScene {
         background.zPosition = 0
         scoreLabel.zPosition = 4
         
+        playMusic()
+        
+    }
+    
+    //фоновая музыка
+    
+    func playMusic() {
+        let musicPath = Bundle.main.url(forResource: "backgroundMusic", withExtension: "m4a")!
+        musicPlayer = try! AVAudioPlayer(contentsOf: musicPath)
+        musicPlayer.play()
+        
+        musicPlayer.numberOfLoops = -1
+        musicPlayer.volume = 0.3
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -272,7 +293,9 @@ extension GameScene: SKPhysicsContactDelegate {
             self.score = 0
             self.scoreLabel.text = "Score: \(self.score)"
         }
-        
+       
+        let hitSoundAction = SKAction.playSoundFileNamed("hitSound", waitForCompletion: true)
+        run(hitSoundAction)
     }
     
     func didEnd(_ contact: SKPhysicsContact) {
