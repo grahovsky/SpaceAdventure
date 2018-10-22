@@ -8,8 +8,28 @@
 
 import UIKit
 
+protocol PauseViewControllerDelegate {
+    
+    func pauseViewControllerPlayButtonPressed(viewConroller: PauseViewController)
+    func pauseViewControllerStoreButtonPressed(viewConroller: PauseViewController)
+    func pauseViewControllerMenuButtonPressed(viewConroller: PauseViewController)
+}
+
 class PauseViewController: UIViewController {
 
+    var delegate: PauseViewControllerDelegate!
+    
+    @IBAction func playButtonPressed(_ sender: Any) {
+        delegate.pauseViewControllerPlayButtonPressed(viewConroller: self)
+    }
+    
+    @IBAction func storeButtonPressed(_ sender: Any) {
+    }
+    
+    @IBAction func menuButtonPressed(_ sender: Any) {
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

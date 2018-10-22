@@ -14,14 +14,14 @@ class GameViewController: UIViewController {
     
     var gameScene: GameScene!
     
-    var pauseViewController: UIViewController!
+    var pauseViewController: PauseViewController!
     
     @IBOutlet weak var pauseButton: UIButton!
     
     @IBAction func pauseButtonPressed(sender: AnyObject) {
         
-        gameScene.pauseButtonPressed(sender: sender)
-
+        gameScene.pauseTheGame()
+        
         if gameScene.gameIsPaused {
             pauseButton.setImage(UIImage(named: "playBtn"), for: .normal)
         } else {
@@ -39,7 +39,8 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        pauseViewController = storyboard?.instantiateViewController(withIdentifier: "pauseViewController")
+        pauseViewController = storyboard?.instantiateViewController(withIdentifier: "pauseViewController") as? PauseViewController
+        pauseViewController.delegate = self
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
@@ -66,12 +67,30 @@ class GameViewController: UIViewController {
         addChild(viewController)
         view.addSubview(viewController.view)
         viewController.view.frame = view.bounds
+        
+        viewController.view.alpha = 0
+        UIView.animate(withDuration: 0.5) {
+            viewController.view.alpha = 1
+        }
     }
-
+    
+    func hidePauseScreen(viewController: PauseViewController) {
+        viewController.willMove(toParent: nil)
+        viewController.removeFromParent()
+        
+        
+        viewController.view.alpha = 1
+        UIView.animate(withDuration: 0.5, animations: {
+            viewController.view.alpha = 0
+        }) { (completed: Bool) in
+            viewController.view.removeFromSuperview()
+        }
+    }
+    
     override var shouldAutorotate: Bool {
         return true
     }
-
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return .allButUpsideDown
@@ -79,8 +98,25 @@ class GameViewController: UIViewController {
             return .all
         }
     }
-
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
+}
+
+extension GameViewController: PauseViewControllerDelegate {
+    
+    func pauseViewControllerPlayButtonPressed(viewConroller: PauseViewController) {
+        hidePauseScreen(viewController: pauseViewController)
+        gameScene.unpauseTheGame()
+    }
+    
+    func pauseViewControllerStoreButtonPressed(viewConroller: PauseViewController) {
+        
+    }
+    
+    func pauseViewControllerMenuButtonPressed(viewConroller: PauseViewController) {
+        
+    }
+    
 }

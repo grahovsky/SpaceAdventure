@@ -50,16 +50,61 @@
                     <view key="view" contentMode="scaleToFill" id="O6F-ev-J1e">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="HV1-v4-lXu">
+                                <rect key="frame" x="49.5" y="350" width="276" height="80"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8e7-UF-dcg">
+                                        <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                        <state key="normal" image="PlayButton"/>
+                                        <connections>
+                                            <action selector="playButtonPressed:" destination="1eQ-7u-aot" eventType="touchUpInside" id="Xz5-eQ-UBA"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="naw-Jh-PpI">
+                                        <rect key="frame" x="98" y="0.0" width="80" height="80"/>
+                                        <state key="normal" image="StoreButton"/>
+                                        <connections>
+                                            <action selector="storeButtonPressed:" destination="1eQ-7u-aot" eventType="touchUpInside" id="AzS-oP-RCq"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="okX-k5-obS">
+                                        <rect key="frame" x="196" y="0.0" width="80" height="80"/>
+                                        <state key="normal" image="MenuButton"/>
+                                        <connections>
+                                            <action selector="menuButtonPressed:" destination="1eQ-7u-aot" eventType="touchUpInside" id="K5t-LF-suZ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PausedTitle" translatesAutoresizingMaskIntoConstraints="NO" id="tG7-Iy-k7X">
+                                <rect key="frame" x="37.5" y="75" width="300" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="tG7-Iy-k7X" secondAttribute="height" multiplier="4" id="pkm-qa-lV0"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.59947559931506844" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="HV1-v4-lXu" firstAttribute="centerX" secondItem="1Bf-pq-FPL" secondAttribute="centerX" id="1vO-EK-5ef"/>
+                            <constraint firstItem="tG7-Iy-k7X" firstAttribute="centerX" secondItem="1Bf-pq-FPL" secondAttribute="centerX" id="3IO-CU-DVl"/>
+                            <constraint firstItem="tG7-Iy-k7X" firstAttribute="top" secondItem="1Bf-pq-FPL" secondAttribute="top" constant="55" id="IiD-Hu-2Ty"/>
+                            <constraint firstItem="HV1-v4-lXu" firstAttribute="top" secondItem="tG7-Iy-k7X" secondAttribute="bottom" constant="200" id="f3U-HV-Fif"/>
+                            <constraint firstItem="tG7-Iy-k7X" firstAttribute="width" secondItem="O6F-ev-J1e" secondAttribute="width" multiplier="0.8" id="k8C-mi-2La"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="1Bf-pq-FPL"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wOi-2v-9Vn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="844" y="121"/>
+            <point key="canvasLocation" x="844" y="120.98950524737631"/>
         </scene>
     </scenes>
     <resources>
+        <image name="MenuButton" width="80" height="80"/>
+        <image name="PausedTitle" width="400" height="98"/>
+        <image name="PlayButton" width="80" height="80"/>
+        <image name="StoreButton" width="80" height="80"/>
         <image name="pauseBtn" width="40" height="40"/>
     </resources>
 </document>

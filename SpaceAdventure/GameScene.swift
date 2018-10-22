@@ -45,16 +45,6 @@ class GameScene: SKScene {
         
     }
     
-    func pauseButtonPressed(sender: AnyObject) {
-        
-        if !gameIsPaused {
-            pauseTheGame()
-        } else {
-            unpauseTheGame()
-        }
-        
-    }
-    
     func unpauseTheGame() {
         
         gameIsPaused = false
