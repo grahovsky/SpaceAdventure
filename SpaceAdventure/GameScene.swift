@@ -16,11 +16,14 @@ protocol GameDelegate {
 }
 
 class GameScene: SKScene {
-
+    
     var gameDelegate: GameDelegate?
     
     let spaceShipCategory: UInt32 = 0x1 << 0
     let asteroidCategory: UInt32 = 0x1 << 1
+    
+    var spaceShipPickedUp: Bool = false
+    var lastLocation: CGPoint = CGPoint.init()
     
     var gameOver = false
     
@@ -119,7 +122,7 @@ class GameScene: SKScene {
         addChild(background)
         
         //создаем слой звёзд
-
+        
         let starsEmitter = SKEmitterNode(fileNamed: "stars.sks")!
         starsEmitter.position = CGPoint(x: 0, y: frame.size.height/2)
         starsEmitter.particlePositionRange.dx = frame.size.width + 10
@@ -140,12 +143,12 @@ class GameScene: SKScene {
         spaceShip.physicsBody?.collisionBitMask = asteroidCategory | asteroidCategory
         spaceShip.physicsBody?.contactTestBitMask = asteroidCategory
         
-//        let colorAction1 = SKAction.colorize(with: UIColor.yellow, colorBlendFactor: 1, duration: 1)
-//        let colorAction2 = SKAction.colorize(with: UIColor.white, colorBlendFactor: 0, duration: 1)
-//        let colorSequenceAnimation = SKAction.sequence([colorAction1, colorAction2])
-//        let colorActionRepeat = SKAction.repeatForever(colorSequenceAnimation)
-//        spaceShip.run(colorActionRepeat)
-
+        //        let colorAction1 = SKAction.colorize(with: UIColor.yellow, colorBlendFactor: 1, duration: 1)
+        //        let colorAction2 = SKAction.colorize(with: UIColor.white, colorBlendFactor: 0, duration: 1)
+        //        let colorSequenceAnimation = SKAction.sequence([colorAction1, colorAction2])
+        //        let colorActionRepeat = SKAction.repeatForever(colorSequenceAnimation)
+        //        spaceShip.run(colorActionRepeat)
+        
         
         //создаем слой космического корабля
         spaceShipLayer = SKNode()
@@ -223,16 +226,55 @@ class GameScene: SKScene {
                 
                 let moveAction = SKAction.move(to: touchLocation, duration: time)
                 moveAction.timingMode = SKActionTimingMode.easeInEaseOut
-                spaceShipLayer.run(moveAction)
+                
+                if nodes(at: touchLocation).contains(spaceShip) {
+                    //spaceShipLayer.position = touchLocation
+                    lastLocation = touchLocation
+                    
+                    spaceShipPickedUp = true
+                } else {
+                    spaceShipLayer.run(moveAction)
+                }
                 
                 let bgMoveAction = SKAction.move(to: CGPoint(x: -touchLocation.x / 50, y: -touchLocation.y / 50), duration: time)
                 background.run(bgMoveAction)
                 
                 let starsMoveAction = SKAction.move(to: CGPoint(x: -touchLocation.x / 40, y: -touchLocation.y / 40), duration: time)
+                
                 starsLayer.run(starsMoveAction)
                 
             }
         }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if !gameIsPaused {
+            
+            if let touch = touches.first {
+                
+                // определяем точку прикосновения с экраном
+                let touchLocation = touch.location(in: self)
+                if spaceShipPickedUp {
+                    
+                    //spaceShipLayer.position = touchLocation
+                    
+                    let translation = CGPoint(x: touchLocation.x - lastLocation.x, y: touchLocation.y - lastLocation.y)
+                    
+                    spaceShipLayer.position.x += translation.x
+                    spaceShipLayer.position.y += translation.y
+                    
+                    lastLocation = touchLocation
+                }
+            }
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        spaceShipPickedUp = false
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        spaceShipPickedUp = false
     }
     
     func distanceCalc(a: CGPoint, b: CGPoint) -> CGFloat {

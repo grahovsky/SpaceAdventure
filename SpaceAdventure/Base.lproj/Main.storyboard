@@ -197,7 +197,6 @@
                                         <rect key="frame" x="98" y="0.0" width="80" height="80"/>
                                         <state key="normal" image="top"/>
                                         <connections>
-                                            <action selector="resetButtonPressed:" destination="4Ir-0x-8iK" eventType="touchUpInside" id="Wja-88-elF"/>
                                             <action selector="topScoreButtonPressed:" destination="4Ir-0x-8iK" eventType="touchUpInside" id="yz8-MZ-b5g"/>
                                         </connections>
                                     </button>
