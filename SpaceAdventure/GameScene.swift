@@ -10,10 +10,19 @@ import SpriteKit
 import GameplayKit
 import AVFoundation
 
+protocol GameDelegate {
+    func gameDelegateUpdateScore(score: Int)
+    func gameDelegateGameOver(score: Int)
+}
+
 class GameScene: SKScene {
+
+    var gameDelegate: GameDelegate?
     
     let spaceShipCategory: UInt32 = 0x1 << 0
     let asteroidCategory: UInt32 = 0x1 << 1
+    
+    var gameOver = false
     
     //создаем свойства
     var spaceShip: SKSpriteNode!
@@ -55,7 +64,7 @@ class GameScene: SKScene {
         gameIsPaused = true
         
         self.asteroidLayer.isPaused = true
-        self.spaceShipLayer.isPaused = true
+        //self.spaceShipLayer.isPaused = true
         self.starsLayer.isPaused = true
         physicsWorld.speed = 0
         
@@ -81,10 +90,12 @@ class GameScene: SKScene {
         score = 0
         scoreLabel.text = "Score: \(self.score)"
         
-        gameIsPaused = false
+        // определяем позицию spaceShip на экране
+        spaceShip.position = CGPoint(x: 0, y: 0)
         
-        self.asteroidLayer.isPaused = false
-        physicsWorld.speed = 1
+        asteroidLayer.removeAllChildren()
+        gameOver = false
+        self.unpauseTheGame()
         
     }
     
@@ -108,9 +119,8 @@ class GameScene: SKScene {
         addChild(background)
         
         //создаем слой звёзд
-        let starsPath = Bundle.main.path(forResource: "stars", ofType: "sks")!
-        let starsEmitter = NSKeyedUnarchiver.unarchiveObject(withFile: starsPath) as! SKEmitterNode
-        
+
+        let starsEmitter = SKEmitterNode(fileNamed: "stars.sks")!
         starsEmitter.position = CGPoint(x: 0, y: frame.size.height/2)
         starsEmitter.particlePositionRange.dx = frame.size.width + 10
         starsEmitter.advanceSimulationTime(100)
@@ -123,8 +133,6 @@ class GameScene: SKScene {
         //Создаем космический корабль
         // инициализируем свойство
         spaceShip = SKSpriteNode(imageNamed: "spaceShip")
-        // определяем позицию spaceShip на экране
-        spaceShip.position = CGPoint(x: 0, y: 0)
         // добавляем
         spaceShip.physicsBody = SKPhysicsBody(texture: spaceShip.texture!, size: spaceShip.size)
         spaceShip.physicsBody?.isDynamic = false
@@ -149,9 +157,7 @@ class GameScene: SKScene {
         addChild(spaceShipLayer)
         
         //создаем огонь
-        let firePath = Bundle.main.path(forResource: "fire", ofType: "sks")!
-        let fireEmitter = NSKeyedUnarchiver.unarchiveObject(withFile: firePath) as! SKEmitterNode
-        
+        let fireEmitter = SKEmitterNode(fileNamed: "fire.sks")!
         fireEmitter.zPosition = 0
         fireEmitter.position.y = -50
         //fireEmitter.targetNode = self
@@ -185,6 +191,7 @@ class GameScene: SKScene {
         scoreLabel.zPosition = 4
         
         playMusic()
+        resetTheGame()
         
     }
     
@@ -302,10 +309,36 @@ extension GameScene: SKPhysicsContactDelegate {
         
         if contact.bodyA.categoryBitMask == spaceShipCategory && contact.bodyB.categoryBitMask == asteroidCategory ||
             contact.bodyA.categoryBitMask == asteroidCategory && contact.bodyB.categoryBitMask == spaceShipCategory {
-            self.score = 0
-            self.scoreLabel.text = "Score: \(self.score)"
         }
-       
+        
+        if !gameOver {
+            
+            self.pauseTheGame()
+            
+            //определяем анимацию столкновения с астероидом
+            let fadeOutAction = SKAction.fadeOut(withDuration: 0.1)
+            fadeOutAction.timingMode = SKActionTimingMode.easeOut
+            
+            let fadeInAction = SKAction.fadeIn(withDuration: 0.1)
+            fadeInAction.timingMode = SKActionTimingMode.easeOut
+            
+            let blinkAction = SKAction.sequence([fadeOutAction, fadeInAction])
+            let blinkRepeatAction = SKAction.repeat(blinkAction, count: 3)
+            
+            let delayAction = SKAction.wait(forDuration: 0.2)
+            
+            let gameOverAction = SKAction.run {
+                self.gameDelegate?.gameDelegateGameOver(score: self.score)
+                self.spaceShipLayer.isPaused = true
+            }
+            
+            let gameOverSequence = SKAction.sequence([blinkRepeatAction, delayAction, gameOverAction])
+            spaceShipLayer.run(gameOverSequence)
+            
+            gameOver = true
+        }
+        
+        
         if soundOn {
             let hitSoundAction = SKAction.playSoundFileNamed("hitSound", waitForCompletion: true)
             run(hitSoundAction)

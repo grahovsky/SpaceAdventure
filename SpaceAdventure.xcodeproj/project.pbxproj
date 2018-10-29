@@ -20,6 +20,7 @@
 		B5CEE641217E3601003C0B0D /* PauseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CEE640217E3601003C0B0D /* PauseViewController.swift */; };
 		B5CEE648217E4A6A003C0B0D /* backgroundMusic.m4a in Resources */ = {isa = PBXBuildFile; fileRef = B5CEE646217E4A6A003C0B0D /* backgroundMusic.m4a */; };
 		B5CEE649217E4A6A003C0B0D /* hitSound.wav in Resources */ = {isa = PBXBuildFile; fileRef = B5CEE647217E4A6A003C0B0D /* hitSound.wav */; };
+		B5CEE64B217F6D34003C0B0D /* GameOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CEE64A217F6D34003C0B0D /* GameOverViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		B5CEE640217E3601003C0B0D /* PauseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseViewController.swift; sourceTree = "<group>"; };
 		B5CEE646217E4A6A003C0B0D /* backgroundMusic.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = backgroundMusic.m4a; sourceTree = "<group>"; };
 		B5CEE647217E4A6A003C0B0D /* hitSound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hitSound.wav; sourceTree = "<group>"; };
+		B5CEE64A217F6D34003C0B0D /* GameOverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,8 +80,9 @@
 				B5CEE620217770A0003C0B0D /* GameScene.sks */,
 				B5CEE622217770A0003C0B0D /* Actions.sks */,
 				B5CEE624217770A0003C0B0D /* GameScene.swift */,
-				B5CEE63C217E2A28003C0B0D /* fire.sks */,
 				B5CEE626217770A0003C0B0D /* GameViewController.swift */,
+				B5CEE64A217F6D34003C0B0D /* GameOverViewController.swift */,
+				B5CEE63C217E2A28003C0B0D /* fire.sks */,
 				B5CEE640217E3601003C0B0D /* PauseViewController.swift */,
 				B5CEE628217770A0003C0B0D /* Main.storyboard */,
 				B5CEE62D217770A2003C0B0D /* LaunchScreen.storyboard */,
@@ -169,6 +172,7 @@
 				B5CEE641217E3601003C0B0D /* PauseViewController.swift in Sources */,
 				B5CEE627217770A0003C0B0D /* GameViewController.swift in Sources */,
 				B5CEE61F217770A0003C0B0D /* AppDelegate.swift in Sources */,
+				B5CEE64B217F6D34003C0B0D /* GameOverViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

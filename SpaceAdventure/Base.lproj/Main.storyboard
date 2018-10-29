@@ -51,8 +51,51 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PausedTitle" translatesAutoresizingMaskIntoConstraints="NO" id="tG7-Iy-k7X">
+                                <rect key="frame" x="37.5" y="75" width="300" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="tG7-Iy-k7X" secondAttribute="height" multiplier="4" id="pkm-qa-lV0"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="soundImage" translatesAutoresizingMaskIntoConstraints="NO" id="qCv-Nb-pCm">
+                                <rect key="frame" x="37.5" y="536" width="178" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="178" id="1xZ-JU-lpV"/>
+                                    <constraint firstAttribute="width" secondItem="qCv-Nb-pCm" secondAttribute="height" multiplier="89:21" id="dP6-5S-S6g"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="musicImage" translatesAutoresizingMaskIntoConstraints="NO" id="EEe-2E-h56">
+                                <rect key="frame" x="37.5" y="597" width="149" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="149" id="OXe-sz-v7y"/>
+                                    <constraint firstAttribute="width" secondItem="EEe-2E-h56" secondAttribute="height" multiplier="149:37" id="xgv-FB-kBe"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XMZ-Er-9T1">
+                                <rect key="frame" x="269.5" y="536" width="68" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="XMZ-Er-9T1" secondAttribute="height" multiplier="34:21" id="IKn-wK-QfG"/>
+                                    <constraint firstAttribute="width" constant="68" id="e1g-bZ-cDR"/>
+                                </constraints>
+                                <state key="normal" image="onImage"/>
+                                <connections>
+                                    <action selector="soundButtonPressed:" destination="1eQ-7u-aot" eventType="touchUpInside" id="Wig-tX-h12"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="opi-1Z-bX7">
+                                <rect key="frame" x="269.5" y="592" width="68" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="68" id="NGW-Jg-nJE"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="68" id="WEP-YD-b3Z"/>
+                                    <constraint firstAttribute="width" secondItem="opi-1Z-bX7" secondAttribute="height" multiplier="34:21" id="fqv-zP-fdN"/>
+                                </constraints>
+                                <state key="normal" image="onImage"/>
+                                <connections>
+                                    <action selector="musicButtonPressed:" destination="1eQ-7u-aot" eventType="touchUpInside" id="HHy-1A-gvy"/>
+                                </connections>
+                            </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="HV1-v4-lXu">
-                                <rect key="frame" x="49.5" y="350" width="276" height="80"/>
+                                <rect key="frame" x="49.5" y="355" width="276" height="80"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8e7-UF-dcg">
                                         <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
@@ -77,49 +120,6 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PausedTitle" translatesAutoresizingMaskIntoConstraints="NO" id="tG7-Iy-k7X">
-                                <rect key="frame" x="37.5" y="75" width="300" height="75"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="tG7-Iy-k7X" secondAttribute="height" multiplier="4" id="pkm-qa-lV0"/>
-                                </constraints>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="soundImage" translatesAutoresizingMaskIntoConstraints="NO" id="qCv-Nb-pCm">
-                                <rect key="frame" x="37.5" y="531" width="178" height="42"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="178" id="1xZ-JU-lpV"/>
-                                    <constraint firstAttribute="width" secondItem="qCv-Nb-pCm" secondAttribute="height" multiplier="89:21" id="dP6-5S-S6g"/>
-                                </constraints>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="musicImage" translatesAutoresizingMaskIntoConstraints="NO" id="EEe-2E-h56">
-                                <rect key="frame" x="37.5" y="592" width="149" height="37"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="149" id="OXe-sz-v7y"/>
-                                    <constraint firstAttribute="width" secondItem="EEe-2E-h56" secondAttribute="height" multiplier="149:37" id="xgv-FB-kBe"/>
-                                </constraints>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XMZ-Er-9T1">
-                                <rect key="frame" x="269.5" y="531" width="68" height="42"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="XMZ-Er-9T1" secondAttribute="height" multiplier="34:21" id="IKn-wK-QfG"/>
-                                    <constraint firstAttribute="width" constant="68" id="e1g-bZ-cDR"/>
-                                </constraints>
-                                <state key="normal" image="onImage"/>
-                                <connections>
-                                    <action selector="soundButtonPressed:" destination="1eQ-7u-aot" eventType="touchUpInside" id="Wig-tX-h12"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="opi-1Z-bX7">
-                                <rect key="frame" x="269.5" y="587" width="68" height="42"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="68" id="NGW-Jg-nJE"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="68" id="WEP-YD-b3Z"/>
-                                    <constraint firstAttribute="width" secondItem="opi-1Z-bX7" secondAttribute="height" multiplier="34:21" id="fqv-zP-fdN"/>
-                                </constraints>
-                                <state key="normal" image="onImage"/>
-                                <connections>
-                                    <action selector="musicButtonPressed:" destination="1eQ-7u-aot" eventType="touchUpInside" id="HHy-1A-gvy"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.59947559931506844" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -134,7 +134,7 @@
                             <constraint firstItem="XMZ-Er-9T1" firstAttribute="top" secondItem="okX-k5-obS" secondAttribute="bottom" constant="101" id="TCr-lB-hYw"/>
                             <constraint firstItem="opi-1Z-bX7" firstAttribute="width" secondItem="opi-1Z-bX7" secondAttribute="height" multiplier="34:21" id="TjT-lz-QU7"/>
                             <constraint firstItem="qCv-Nb-pCm" firstAttribute="leading" secondItem="tG7-Iy-k7X" secondAttribute="leading" id="Y6w-bw-gUY"/>
-                            <constraint firstItem="HV1-v4-lXu" firstAttribute="top" secondItem="tG7-Iy-k7X" secondAttribute="bottom" constant="200" id="f3U-HV-Fif"/>
+                            <constraint firstItem="HV1-v4-lXu" firstAttribute="top" secondItem="tG7-Iy-k7X" secondAttribute="bottom" constant="205" id="f3U-HV-Fif"/>
                             <constraint firstItem="tG7-Iy-k7X" firstAttribute="width" secondItem="O6F-ev-J1e" secondAttribute="width" multiplier="0.8" id="k8C-mi-2La"/>
                             <constraint firstItem="opi-1Z-bX7" firstAttribute="trailing" secondItem="tG7-Iy-k7X" secondAttribute="trailing" id="sa1-BU-THr"/>
                         </constraints>
@@ -149,15 +149,105 @@
             </objects>
             <point key="canvasLocation" x="844" y="120.98950524737631"/>
         </scene>
+        <!--Game Over View Controller-->
+        <scene sceneID="Uss-wc-pu7">
+            <objects>
+                <viewController storyboardIdentifier="GameOverViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4Ir-0x-8iK" customClass="GameOverViewController" customModule="SpaceAdventure" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PAi-yt-QQD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gameOver" translatesAutoresizingMaskIntoConstraints="NO" id="Dx9-yZ-rcI">
+                                <rect key="frame" x="28.5" y="66" width="318" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Dx9-yZ-rcI" secondAttribute="height" multiplier="53:10" id="8AW-xd-Ef1"/>
+                                    <constraint firstAttribute="width" constant="318" id="kJ3-SA-X6Q"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="318" id="oLq-CF-AKI"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="youHave" translatesAutoresizingMaskIntoConstraints="NO" id="T0n-XW-bcM">
+                                <rect key="frame" x="104.5" y="159" width="166" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="T0n-XW-bcM" secondAttribute="height" multiplier="83:17" id="sI3-g4-qcO"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FZC-LK-hvC">
+                                <rect key="frame" x="152.5" y="226" width="70.5" height="35"/>
+                                <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="30"/>
+                                <color key="textColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="scores" translatesAutoresizingMaskIntoConstraints="NO" id="miR-o1-Ype">
+                                <rect key="frame" x="104.5" y="288" width="166" height="38"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="miR-o1-Ype" secondAttribute="height" multiplier="83:19" id="7Fd-IQ-qu1"/>
+                                </constraints>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="Nuw-wH-5i1">
+                                <rect key="frame" x="49.5" y="359" width="276" height="80"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H8e-F5-GWE">
+                                        <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                        <state key="normal" image="resetBtn"/>
+                                        <connections>
+                                            <action selector="resetButtonPressed:" destination="4Ir-0x-8iK" eventType="touchUpInside" id="9Wh-CW-01E"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hDM-X1-GCw">
+                                        <rect key="frame" x="98" y="0.0" width="80" height="80"/>
+                                        <state key="normal" image="top"/>
+                                        <connections>
+                                            <action selector="resetButtonPressed:" destination="4Ir-0x-8iK" eventType="touchUpInside" id="Wja-88-elF"/>
+                                            <action selector="topScoreButtonPressed:" destination="4Ir-0x-8iK" eventType="touchUpInside" id="yz8-MZ-b5g"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ko5-tS-dDD">
+                                        <rect key="frame" x="196" y="0.0" width="80" height="80"/>
+                                        <state key="normal" image="MenuButton"/>
+                                        <connections>
+                                            <action selector="menuButtonPressed:" destination="4Ir-0x-8iK" eventType="touchUpInside" id="be5-xU-EGZ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="T0n-XW-bcM" firstAttribute="centerX" secondItem="Dx9-yZ-rcI" secondAttribute="centerX" id="62b-0M-F9o"/>
+                            <constraint firstItem="Nuw-wH-5i1" firstAttribute="centerX" secondItem="miR-o1-Ype" secondAttribute="centerX" id="7Ua-qB-khO"/>
+                            <constraint firstItem="Dx9-yZ-rcI" firstAttribute="top" secondItem="fQX-N8-S9Z" secondAttribute="top" constant="46" id="8E9-T7-yvP"/>
+                            <constraint firstItem="miR-o1-Ype" firstAttribute="top" secondItem="FZC-LK-hvC" secondAttribute="bottom" constant="27" id="Awh-SA-1Fo"/>
+                            <constraint firstItem="Dx9-yZ-rcI" firstAttribute="centerX" secondItem="fQX-N8-S9Z" secondAttribute="centerX" id="JOl-fm-Vxv"/>
+                            <constraint firstItem="Nuw-wH-5i1" firstAttribute="top" secondItem="miR-o1-Ype" secondAttribute="bottom" constant="33" id="N2F-JL-eay"/>
+                            <constraint firstItem="T0n-XW-bcM" firstAttribute="top" secondItem="Dx9-yZ-rcI" secondAttribute="bottom" constant="33" id="NLK-BX-S7k"/>
+                            <constraint firstItem="FZC-LK-hvC" firstAttribute="centerX" secondItem="T0n-XW-bcM" secondAttribute="centerX" id="b7m-Oc-bRx"/>
+                            <constraint firstItem="FZC-LK-hvC" firstAttribute="top" secondItem="T0n-XW-bcM" secondAttribute="bottom" constant="33" id="p2J-Ee-DaC"/>
+                            <constraint firstItem="miR-o1-Ype" firstAttribute="centerX" secondItem="FZC-LK-hvC" secondAttribute="centerX" id="vW7-Gm-vGj"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="fQX-N8-S9Z"/>
+                    </view>
+                    <connections>
+                        <outlet property="scoreLabel" destination="FZC-LK-hvC" id="TH5-KQ-xK2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hkO-by-Ig7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1565.5999999999999" y="121.88905547226388"/>
+        </scene>
     </scenes>
     <resources>
         <image name="MenuButton" width="80" height="80"/>
         <image name="PausedTitle" width="400" height="98"/>
         <image name="PlayButton" width="80" height="80"/>
         <image name="StoreButton" width="80" height="80"/>
+        <image name="gameOver" width="552" height="87"/>
         <image name="musicImage" width="334.5" height="98"/>
         <image name="onImage" width="145" height="89"/>
         <image name="pauseBtn" width="40" height="40"/>
+        <image name="resetBtn" width="80" height="80"/>
+        <image name="scores" width="166.5" height="38.5"/>
         <image name="soundImage" width="382" height="93.5"/>
+        <image name="top" width="80" height="80"/>
+        <image name="youHave" width="166.5" height="34"/>
     </resources>
 </document>

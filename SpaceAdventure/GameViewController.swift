@@ -16,6 +16,8 @@ class GameViewController: UIViewController {
     
     var pauseViewController: PauseViewController!
     
+    var gameOverViewController: GameOverViewController!
+    
     @IBOutlet weak var pauseButton: UIButton!
     
     @IBAction func pauseButtonPressed(sender: AnyObject) {
@@ -29,7 +31,7 @@ class GameViewController: UIViewController {
         }
         
         //present(pauseViewController, animated: true, completion: nil)
-        showPauseScreen(viewController: pauseViewController)
+        showGameScreen(viewController: pauseViewController)
     }
     
     override func viewDidLayoutSubviews() {
@@ -41,6 +43,9 @@ class GameViewController: UIViewController {
         
         pauseViewController = storyboard?.instantiateViewController(withIdentifier: "pauseViewController") as? PauseViewController
         pauseViewController.delegate = self
+        
+        gameOverViewController = storyboard?.instantiateViewController(withIdentifier: "GameOverViewController") as? GameOverViewController
+        gameOverViewController.delegate = self
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
@@ -54,6 +59,7 @@ class GameViewController: UIViewController {
                 view.presentScene(scene)
                 
                 gameScene = scene as? GameScene
+                gameScene.gameDelegate = self
             }
             
             view.ignoresSiblingOrder = true
@@ -63,7 +69,7 @@ class GameViewController: UIViewController {
         }
     }
     
-    func showPauseScreen(viewController: UIViewController) {
+    func showGameScreen(viewController: UIViewController) {
         addChild(viewController)
         view.addSubview(viewController.view)
         viewController.view.frame = view.bounds
@@ -74,7 +80,7 @@ class GameViewController: UIViewController {
         }
     }
     
-    func hidePauseScreen(viewController: PauseViewController) {
+    func hideGameScreen(viewController: UIViewController) {
         viewController.willMove(toParent: nil)
         viewController.removeFromParent()
         
@@ -104,10 +110,11 @@ class GameViewController: UIViewController {
     }
 }
 
+//MARK: PauseViewControllerDelegate
 extension GameViewController: PauseViewControllerDelegate {
     
     func pauseViewControllerPlayButtonPressed(viewConroller: PauseViewController) {
-        hidePauseScreen(viewController: pauseViewController)
+        hideGameScreen(viewController: pauseViewController)
         gameScene.unpauseTheGame()
         
         if gameScene.gameIsPaused {
@@ -138,6 +145,37 @@ extension GameViewController: PauseViewControllerDelegate {
         
         let image = gameScene.soundOn ? UIImage(named: "onImage") : UIImage(named: "offImage")
         viewConroller.soundButton.setImage(image, for: .normal)
+    }
+    
+}
+
+//MARK: GameOverViewControllerDelegate
+extension GameViewController: GameOverViewControllerDelegate {
+    
+    func gameOverViewControllerResetButtonPressed(gameOverViewController: GameOverViewController) {
+        gameScene.resetTheGame()
+        hideGameScreen(viewController: gameOverViewController)
+    }
+    
+    func gameOverViewControllerTopScoreButtonPressed(gameOverViewController: GameOverViewController) {
+        
+    }
+    
+    func gameOverViewControllerMenuButtonPressed(gameOverViewController: GameOverViewController) {
+        
+    }
+}
+
+//MARK: GameDelegate
+extension GameViewController: GameDelegate {
+    
+    func gameDelegateUpdateScore(score: Int) {
+    
+    }
+    
+    func gameDelegateGameOver(score: Int) {
+        gameOverViewController.score = score
+        showGameScreen(viewController: gameOverViewController)
     }
     
 }
