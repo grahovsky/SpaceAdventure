@@ -27,16 +27,30 @@
                                     <action selector="pauseButtonPressedWithSender:" destination="BV1-FR-VrT" eventType="touchUpInside" id="ABK-Ls-8YE"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tnh-To-8EJ">
+                                <rect key="frame" x="133" y="38" width="109" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="109" id="d2N-iV-aBs"/>
+                                    <constraint firstAttribute="height" constant="30" id="tmB-ee-9Ce"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="25"/>
+                                <color key="textColor" red="1" green="0.3271392937" blue="0.26151021229999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="tnh-To-8EJ" firstAttribute="centerX" secondItem="4qk-I5-YsI" secondAttribute="centerX" id="BYY-Qj-7Uw"/>
                             <constraint firstItem="ct8-C2-EPx" firstAttribute="top" secondItem="4qk-I5-YsI" secondAttribute="top" constant="18" id="EoQ-x2-Ggl"/>
                             <constraint firstItem="4qk-I5-YsI" firstAttribute="trailing" secondItem="ct8-C2-EPx" secondAttribute="trailing" constant="19" id="NHq-9S-3cR"/>
+                            <constraint firstItem="tnh-To-8EJ" firstAttribute="top" secondItem="4qk-I5-YsI" secondAttribute="top" constant="18" id="cGY-sg-Ujk"/>
+                            <constraint firstItem="tnh-To-8EJ" firstAttribute="centerX" secondItem="4qk-I5-YsI" secondAttribute="centerX" id="cX4-y9-IfF"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
                     </view>
                     <connections>
                         <outlet property="pauseButton" destination="ct8-C2-EPx" id="2Ka-9T-LYH"/>
+                        <outlet property="scoreLabel" destination="tnh-To-8EJ" id="7Ba-Oa-lBN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>

@@ -18,7 +18,8 @@ class GameOverViewController: UIViewController {
     
     var score = 0
     var delegate: GameOverViewControllerDelegate!
-
+    var gameSettings: GameSettings!
+    
     @IBOutlet weak var scoreLabel: UILabel!
     
     @IBAction func resetButtonPressed(_ sender: Any) {
@@ -40,7 +41,10 @@ class GameOverViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {        
-        scoreLabel.text = "\(score)"
+        //scoreLabel.text = "\(score)"
+        scoreLabel.text = "\(gameSettings.highscore)"
+        
+        super.viewDidAppear(animated)
     }
 
 }

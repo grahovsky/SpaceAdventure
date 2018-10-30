@@ -18,6 +18,10 @@ class GameViewController: UIViewController {
     
     var gameOverViewController: GameOverViewController!
     
+    var gameSettings: GameSettings!
+    
+    @IBOutlet weak var scoreLabel: UILabel!
+    
     @IBOutlet weak var pauseButton: UIButton!
     
     @IBAction func pauseButtonPressed(sender: AnyObject) {
@@ -41,11 +45,14 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        gameSettings = GameSettings()
+        
         pauseViewController = storyboard?.instantiateViewController(withIdentifier: "pauseViewController") as? PauseViewController
         pauseViewController.delegate = self
         
         gameOverViewController = storyboard?.instantiateViewController(withIdentifier: "GameOverViewController") as? GameOverViewController
         gameOverViewController.delegate = self
+        gameOverViewController.gameSettings = gameSettings
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
@@ -60,6 +67,7 @@ class GameViewController: UIViewController {
                 
                 gameScene = scene as? GameScene
                 gameScene.gameDelegate = self
+                gameScene.gameSettings = gameSettings
             }
             
             view.ignoresSiblingOrder = true
@@ -136,12 +144,16 @@ extension GameViewController: PauseViewControllerDelegate {
         gameScene.musicOn = !gameScene.musicOn
         gameScene.musicOnOrOff()
         
+        gameSettings.saveSettings(settings: [gameScene.musicOn, gameScene.soundOn])
+        
         let image = gameScene.musicOn ? UIImage(named: "onImage") : UIImage(named: "offImage")
         viewConroller.musicButton.setImage(image, for: .normal)
     }
     
     func pauseViewControllerSoundButtonPressed(viewConroller: PauseViewController) {
         gameScene.soundOn = !gameScene.soundOn
+        
+        gameSettings.saveSettings(settings: [gameScene.musicOn, gameScene.soundOn])
         
         let image = gameScene.soundOn ? UIImage(named: "onImage") : UIImage(named: "offImage")
         viewConroller.soundButton.setImage(image, for: .normal)
@@ -169,11 +181,21 @@ extension GameViewController: GameOverViewControllerDelegate {
 //MARK: GameDelegate
 extension GameViewController: GameDelegate {
     
+    func gameDelegateDidUpdateScore(score: Int) {
+        scoreLabel.text = "\(self.gameSettings.currentScore)"
+    }
+    
+    func gameDelegateReset() {
+        scoreLabel.text = "\(self.gameSettings.currentScore)"
+    }
+    
+    
     func gameDelegateUpdateScore(score: Int) {
     
     }
     
     func gameDelegateGameOver(score: Int) {
+        gameSettings.recordScores(score: score)
         gameOverViewController.score = score
         showGameScreen(viewController: gameOverViewController)
     }

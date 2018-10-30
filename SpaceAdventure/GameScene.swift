@@ -11,13 +11,15 @@ import GameplayKit
 import AVFoundation
 
 protocol GameDelegate {
-    func gameDelegateUpdateScore(score: Int)
+    func gameDelegateDidUpdateScore(score: Int)
     func gameDelegateGameOver(score: Int)
+    func gameDelegateReset()
 }
 
 class GameScene: SKScene {
     
     var gameDelegate: GameDelegate?
+    var gameSettings: GameSettings!
     
     let spaceShipCategory: UInt32 = 0x1 << 0
     let asteroidCategory: UInt32 = 0x1 << 1
@@ -31,8 +33,8 @@ class GameScene: SKScene {
     var spaceShip: SKSpriteNode!
     var background: SKSpriteNode!
     
-    var score = 0
-    var scoreLabel: SKLabelNode!
+//    var score = 0
+//    var scoreLabel: SKLabelNode!
     
     //слой космического корабля
     var spaceShipLayer: SKNode!
@@ -90,8 +92,12 @@ class GameScene: SKScene {
     
     func resetTheGame() {
         
-        score = 0
-        scoreLabel.text = "Score: \(self.score)"
+//        score = 0
+//        scoreLabel.text = "Score: \(self.score)"
+        
+        gameSettings.resetCurrentScore()
+        gameDelegate?.gameDelegateReset()
+        
         
         // определяем позицию spaceShip на экране
         spaceShip.position = CGPoint(x: 0, y: 0)
@@ -183,15 +189,20 @@ class GameScene: SKScene {
         
         self.asteroidLayer.run(asteroidRunAction)
         
-        scoreLabel = SKLabelNode(text: "Score: \(score)")
-        scoreLabel.fontSize = 30
-        scoreLabel.fontName = "Futura"
-        scoreLabel.fontColor = #colorLiteral(red: 0.7655060279, green: 0.3717384464, blue: 0.1646142797, alpha: 1)
-        scoreLabel.position = CGPoint(x: 0, y: frame.size.height/2 - scoreLabel.calculateAccumulatedFrame().height - 15)
-        addChild(scoreLabel)
+//        scoreLabel = SKLabelNode(text: "Score: \(score)")
+//        scoreLabel.fontSize = 30
+//        scoreLabel.fontName = "Futura"
+//        scoreLabel.fontColor = #colorLiteral(red: 0.7655060279, green: 0.3717384464, blue: 0.1646142797, alpha: 1)
+//        scoreLabel.position = CGPoint(x: 0, y: frame.size.height/2 - scoreLabel.calculateAccumulatedFrame().height - 15)
+//        addChild(scoreLabel)
         
         background.zPosition = 0
-        scoreLabel.zPosition = 4
+//        scoreLabel.zPosition = 4
+        
+        gameSettings = GameSettings()
+        
+        musicOn = gameSettings.musicOn
+        soundOn = gameSettings.soundOn
         
         playMusic()
         resetTheGame()
@@ -336,11 +347,17 @@ class GameScene: SKScene {
             if asteroid.position.y < -(self.frame.size.height/2 + asteroid.calculateAccumulatedFrame().height) {
                 asteroid.removeFromParent()
                 
-                self.score += 1
-                self.scoreLabel.text = "Score: \(self.score)"
+//                self.score += 1
+//                self.scoreLabel.text = "Score: \(self.score)"
+                self.addPoints(points: 1)
                 
             }
         }
+    }
+    
+    func addPoints(points: Int) {
+        gameSettings.currentScore += points
+        gameDelegate?.gameDelegateDidUpdateScore(score: self.gameSettings.currentScore)
     }
     
 }
@@ -370,7 +387,8 @@ extension GameScene: SKPhysicsContactDelegate {
             let delayAction = SKAction.wait(forDuration: 0.2)
             
             let gameOverAction = SKAction.run {
-                self.gameDelegate?.gameDelegateGameOver(score: self.score)
+                self.gameSettings.recordScores(score: self.gameSettings.currentScore)
+                self.gameDelegate?.gameDelegateGameOver(score: self.gameSettings.currentScore)
                 self.spaceShipLayer.isPaused = true
             }
             
