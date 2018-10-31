@@ -14,6 +14,15 @@ protocol GameDelegate {
     func gameDelegateDidUpdateScore(score: Int)
     func gameDelegateGameOver(score: Int)
     func gameDelegateReset()
+    
+    func gameDelegateDidUpdateLives()
+}
+
+enum CollisionCategories: UInt32 {
+    case None = 1
+    case PlayerSpaceShip = 2
+    case Asteroid = 4
+    case EnemyShip = 8
 }
 
 class GameScene: SKScene {
@@ -21,13 +30,11 @@ class GameScene: SKScene {
     var gameDelegate: GameDelegate?
     var gameSettings: GameSettings!
     
-    let spaceShipCategory: UInt32 = 0x1 << 0
-    let asteroidCategory: UInt32 = 0x1 << 1
-    
     var spaceShipPickedUp: Bool = false
     var lastLocation: CGPoint = CGPoint.init()
     
     var gameOver = false
+    var playerWasHit = false
     
     //создаем свойства
     var spaceShip: SKSpriteNode!
@@ -100,15 +107,25 @@ class GameScene: SKScene {
         
         
         // определяем позицию spaceShip на экране
-        spaceShip.position = CGPoint(x: 0, y: 0)
+        spaceShipLayer.position = CGPoint(x: 0, y: 0)
         
         asteroidLayer.removeAllChildren()
         gameOver = false
+        playerWasHit = false
         self.unpauseTheGame()
         
     }
     
-    
+    func respawn() {
+
+        unpauseTheGame()
+        playerWasHit = false
+        asteroidLayer.removeAllChildren()
+
+        // определяем позицию spaceShip на экране
+        spaceShipLayer.position = CGPoint(x: 0, y: 0)
+        
+    }
     
     override func didMove(to view: SKView) {
         
@@ -145,9 +162,9 @@ class GameScene: SKScene {
         // добавляем
         spaceShip.physicsBody = SKPhysicsBody(texture: spaceShip.texture!, size: spaceShip.size)
         spaceShip.physicsBody?.isDynamic = false
-        spaceShip.physicsBody?.categoryBitMask = spaceShipCategory
-        spaceShip.physicsBody?.collisionBitMask = asteroidCategory | asteroidCategory
-        spaceShip.physicsBody?.contactTestBitMask = asteroidCategory
+        spaceShip.physicsBody?.categoryBitMask = CollisionCategories.PlayerSpaceShip.rawValue
+        spaceShip.physicsBody?.collisionBitMask = CollisionCategories.PlayerSpaceShip.rawValue | CollisionCategories.Asteroid.rawValue
+        spaceShip.physicsBody?.contactTestBitMask = CollisionCategories.Asteroid.rawValue
         
         //        let colorAction1 = SKAction.colorize(with: UIColor.yellow, colorBlendFactor: 1, duration: 1)
         //        let colorAction2 = SKAction.colorize(with: UIColor.white, colorBlendFactor: 0, duration: 1)
@@ -318,9 +335,9 @@ class GameScene: SKScene {
         asteroid.physicsBody = SKPhysicsBody(texture: asteroid.texture!, size: asteroid.size)
         asteroid.name = "asteroid"
         
-        asteroid.physicsBody?.categoryBitMask = asteroidCategory
-        asteroid.physicsBody?.collisionBitMask = spaceShipCategory
-        asteroid.physicsBody?.contactTestBitMask = spaceShipCategory
+        asteroid.physicsBody?.categoryBitMask = CollisionCategories.Asteroid.rawValue
+        asteroid.physicsBody?.collisionBitMask = CollisionCategories.PlayerSpaceShip.rawValue
+        asteroid.physicsBody?.contactTestBitMask = CollisionCategories.PlayerSpaceShip.rawValue
         
         //asteroid.zPosition = 2
         
@@ -366,11 +383,13 @@ extension GameScene: SKPhysicsContactDelegate {
     
     func didBegin(_ contact: SKPhysicsContact) {
         
-        if contact.bodyA.categoryBitMask == spaceShipCategory && contact.bodyB.categoryBitMask == asteroidCategory ||
-            contact.bodyA.categoryBitMask == asteroidCategory && contact.bodyB.categoryBitMask == spaceShipCategory {
+        if contact.bodyA.categoryBitMask == CollisionCategories.PlayerSpaceShip.rawValue && contact.bodyB.categoryBitMask == CollisionCategories.Asteroid.rawValue ||
+            contact.bodyA.categoryBitMask == CollisionCategories.Asteroid.rawValue && contact.bodyB.categoryBitMask == CollisionCategories.PlayerSpaceShip.rawValue {
         }
         
-        if !gameOver {
+        if !gameOver && !playerWasHit {
+        
+            self.playerWasHit = true
             
             self.pauseTheGame()
             
@@ -387,15 +406,25 @@ extension GameScene: SKPhysicsContactDelegate {
             let delayAction = SKAction.wait(forDuration: 0.2)
             
             let gameOverAction = SKAction.run {
-                self.gameSettings.recordScores(score: self.gameSettings.currentScore)
-                self.gameDelegate?.gameDelegateGameOver(score: self.gameSettings.currentScore)
-                self.spaceShipLayer.isPaused = true
+                
+                self.gameSettings.lives -= 1
+                self.gameDelegate?.gameDelegateDidUpdateLives()
+                
+                if self.gameSettings.lives > 0 {
+                    self.respawn()
+                } else
+                {
+                    self.gameSettings.recordScores(score: self.gameSettings.currentScore)
+                    self.gameDelegate?.gameDelegateGameOver(score: self.gameSettings.currentScore)
+                    self.spaceShipLayer.isPaused = true
+                    self.gameOver = true
+                    self.pauseTheGame()
+                }
             }
             
             let gameOverSequence = SKAction.sequence([blinkRepeatAction, delayAction, gameOverAction])
             spaceShipLayer.run(gameOverSequence)
             
-            gameOver = true
         }
         
         

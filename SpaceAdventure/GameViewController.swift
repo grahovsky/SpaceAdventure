@@ -20,6 +20,12 @@ class GameViewController: UIViewController {
     
     var gameSettings: GameSettings!
     
+    @IBOutlet weak var liveFirstImageView: UIImageView!
+    
+    @IBOutlet weak var liveSecondImageView: UIImageView!
+    
+    @IBOutlet weak var liveThirdImageView: UIImageView!
+    
     @IBOutlet weak var scoreLabel: UILabel!
     
     @IBOutlet weak var pauseButton: UIButton!
@@ -187,17 +193,46 @@ extension GameViewController: GameDelegate {
     
     func gameDelegateReset() {
         scoreLabel.text = "\(self.gameSettings.currentScore)"
+        updateUiLives()
     }
     
     
     func gameDelegateUpdateScore(score: Int) {
-    
+        
     }
     
     func gameDelegateGameOver(score: Int) {
         gameSettings.recordScores(score: score)
         gameOverViewController.score = score
         showGameScreen(viewController: gameOverViewController)
+    }
+    
+    func gameDelegateDidUpdateLives() {
+        updateUiLives()
+    }
+    
+    func updateUiLives() {
+        
+        UIView.animate(withDuration: 0.4) {
+            if self.gameSettings.lives <= 0 {
+                self.liveFirstImageView.alpha = 0
+                self.liveSecondImageView.alpha = 0
+                self.liveThirdImageView.alpha = 0
+            } else if self.gameSettings.lives == 1 {
+                self.liveFirstImageView.alpha = 0
+                self.liveSecondImageView.alpha = 0
+                self.liveThirdImageView.alpha = 0.6
+            } else if self.gameSettings.lives == 2 {
+                self.liveFirstImageView.alpha = 0
+                self.liveSecondImageView.alpha = 0.8
+                self.liveThirdImageView.alpha = 0.6
+            } else if self.gameSettings.lives == 3 {
+                self.liveFirstImageView.alpha = 1
+                self.liveSecondImageView.alpha = 0.8
+                self.liveThirdImageView.alpha = 0.6
+            }
+        }
+        
     }
     
 }

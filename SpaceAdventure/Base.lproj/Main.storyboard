@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -30,25 +30,51 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tnh-To-8EJ">
                                 <rect key="frame" x="133" y="38" width="109" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="109" id="d2N-iV-aBs"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="109" id="d2N-iV-aBs"/>
                                     <constraint firstAttribute="height" constant="30" id="tmB-ee-9Ce"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="TrebuchetMS-Bold" family="Trebuchet MS" pointSize="25"/>
                                 <color key="textColor" red="1" green="0.3271392937" blue="0.26151021229999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="lifes" translatesAutoresizingMaskIntoConstraints="NO" id="8yZ-NR-yob">
+                                <rect key="frame" x="16" y="614" width="33" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="O2y-Us-724"/>
+                                    <constraint firstAttribute="width" constant="33" id="k9e-7Q-u1d"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="lifes" translatesAutoresizingMaskIntoConstraints="NO" id="86V-mk-iRu">
+                                <rect key="frame" x="57" y="614" width="33" height="33"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="lifes" translatesAutoresizingMaskIntoConstraints="NO" id="vfS-vZ-ZiW">
+                                <rect key="frame" x="98" y="614" width="33" height="33"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="4qk-I5-YsI" firstAttribute="bottom" secondItem="8yZ-NR-yob" secondAttribute="bottom" constant="20" id="7yt-Tn-WjL"/>
+                            <constraint firstItem="86V-mk-iRu" firstAttribute="bottom" secondItem="8yZ-NR-yob" secondAttribute="bottom" id="8jE-Tm-OSs"/>
                             <constraint firstItem="tnh-To-8EJ" firstAttribute="centerX" secondItem="4qk-I5-YsI" secondAttribute="centerX" id="BYY-Qj-7Uw"/>
+                            <constraint firstItem="86V-mk-iRu" firstAttribute="leading" secondItem="8yZ-NR-yob" secondAttribute="trailing" constant="8" id="E2z-61-8Ay"/>
                             <constraint firstItem="ct8-C2-EPx" firstAttribute="top" secondItem="4qk-I5-YsI" secondAttribute="top" constant="18" id="EoQ-x2-Ggl"/>
+                            <constraint firstItem="vfS-vZ-ZiW" firstAttribute="bottom" secondItem="86V-mk-iRu" secondAttribute="bottom" id="Gre-zT-uPy"/>
+                            <constraint firstItem="vfS-vZ-ZiW" firstAttribute="leading" secondItem="86V-mk-iRu" secondAttribute="trailing" constant="8" id="Imv-Dd-pMa"/>
                             <constraint firstItem="4qk-I5-YsI" firstAttribute="trailing" secondItem="ct8-C2-EPx" secondAttribute="trailing" constant="19" id="NHq-9S-3cR"/>
+                            <constraint firstItem="vfS-vZ-ZiW" firstAttribute="width" secondItem="86V-mk-iRu" secondAttribute="width" id="PBH-mL-hyn"/>
+                            <constraint firstItem="86V-mk-iRu" firstAttribute="width" secondItem="8yZ-NR-yob" secondAttribute="width" id="Vjy-fb-6GR"/>
                             <constraint firstItem="tnh-To-8EJ" firstAttribute="top" secondItem="4qk-I5-YsI" secondAttribute="top" constant="18" id="cGY-sg-Ujk"/>
                             <constraint firstItem="tnh-To-8EJ" firstAttribute="centerX" secondItem="4qk-I5-YsI" secondAttribute="centerX" id="cX4-y9-IfF"/>
+                            <constraint firstItem="vfS-vZ-ZiW" firstAttribute="height" secondItem="86V-mk-iRu" secondAttribute="height" id="hbg-wy-V91"/>
+                            <constraint firstItem="86V-mk-iRu" firstAttribute="height" secondItem="8yZ-NR-yob" secondAttribute="height" id="ngz-5b-1ef"/>
+                            <constraint firstItem="8yZ-NR-yob" firstAttribute="leading" secondItem="4qk-I5-YsI" secondAttribute="leading" constant="16" id="ppo-fe-6AA"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
                     </view>
                     <connections>
+                        <outlet property="liveFirstImageView" destination="vfS-vZ-ZiW" id="Rh4-tN-585"/>
+                        <outlet property="liveSecondImageView" destination="86V-mk-iRu" id="xub-pt-ULh"/>
+                        <outlet property="liveThirdImageView" destination="8yZ-NR-yob" id="NCs-RC-Jnz"/>
                         <outlet property="pauseButton" destination="ct8-C2-EPx" id="2Ka-9T-LYH"/>
                         <outlet property="scoreLabel" destination="tnh-To-8EJ" id="7Ba-Oa-lBN"/>
                     </connections>
@@ -254,6 +280,7 @@
         <image name="PlayButton" width="80" height="80"/>
         <image name="StoreButton" width="80" height="80"/>
         <image name="gameOver" width="552" height="87"/>
+        <image name="lifes" width="100" height="100"/>
         <image name="musicImage" width="334.5" height="98"/>
         <image name="onImage" width="145" height="89"/>
         <image name="pauseBtn" width="40" height="40"/>

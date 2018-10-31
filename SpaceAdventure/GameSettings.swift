@@ -15,6 +15,9 @@ class GameSettings: NSObject {
     var lastScore: Int
     var musicOn: Bool
     var soundOn: Bool
+    var startingNumberOfLives = 3
+    
+    var lives: Int
     
     override init() {
         
@@ -25,9 +28,13 @@ class GameSettings: NSObject {
         musicOn = true
         soundOn = true
         
+        lives = startingNumberOfLives
+        
         super.init()
         
         loadGameSettings()
+        
+        
     }
     
     func saveSettings(settings: [Bool]) {
@@ -76,6 +83,8 @@ class GameSettings: NSObject {
     
     func resetCurrentScore() {
         currentScore = 0
+        
+        lives = startingNumberOfLives
     }
     
     func resetHighscore() {
