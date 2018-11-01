@@ -20,12 +20,12 @@ class EnemySpaceShip: SKSpriteNode {
         //создаем физическое тело
         physicsBody = SKPhysicsBody(texture: enemyTexture, size: enemyTexture.size())
         
-        physicsBody?.affectedByGravity = false
+        //physicsBody?.affectedByGravity = false
         physicsBody?.allowsRotation = false
         
         physicsBody?.categoryBitMask = CollisionCategories.EnemySpaceShip.rawValue
-        physicsBody?.contactTestBitMask = CollisionCategories.PlayerSpaceShip.rawValue
-        physicsBody?.collisionBitMask = CollisionCategories.None.rawValue
+        physicsBody?.contactTestBitMask = CollisionCategories.PlayerSpaceShip.rawValue | CollisionCategories.PlayerLaser.rawValue
+        physicsBody?.collisionBitMask = CollisionCategories.PlayerSpaceShip.rawValue | CollisionCategories.PlayerLaser.rawValue
 
     }
     

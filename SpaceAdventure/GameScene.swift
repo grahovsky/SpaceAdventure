@@ -23,6 +23,7 @@ enum CollisionCategories: UInt32 {
     case PlayerSpaceShip = 2
     case Asteroid = 4
     case EnemySpaceShip = 8
+    case PlayerLaser = 16
 }
 
 class GameScene: SKScene {
@@ -46,6 +47,9 @@ class GameScene: SKScene {
     
     //слой космического корабля
     var spaceShipLayer: SKNode!
+    
+    //слой лазера корабля игрока
+    var redLaserLayer: SKNode!
     
     //слой астероидов
     var asteroidLayer: SKNode!
@@ -83,6 +87,7 @@ class GameScene: SKScene {
         //self.spaceShipLayer.isPaused = true
         self.starsLayer.isPaused = true
         self.enemyLayer.isPaused = true
+        self.redLaserLayer.isPaused = true
         physicsWorld.speed = 0
         
         musicOnOrOff()
@@ -97,6 +102,7 @@ class GameScene: SKScene {
         self.spaceShipLayer.isPaused = false
         self.starsLayer.isPaused = false
         self.enemyLayer.isPaused = false
+        self.redLaserLayer.isPaused = false
         physicsWorld.speed = 1
         
         musicOnOrOff()
@@ -116,6 +122,9 @@ class GameScene: SKScene {
         spaceShipLayer.position = CGPoint(x: 0, y: 0)
         
         asteroidLayer.removeAllChildren()
+        
+        redLaserLayer.removeAllChildren()
+        
         gameOver = false
         playerWasHit = false
         self.unpauseTheGame()
@@ -127,6 +136,7 @@ class GameScene: SKScene {
         unpauseTheGame()
         playerWasHit = false
         asteroidLayer.removeAllChildren()
+        redLaserLayer.removeAllChildren()
         
         // определяем позицию spaceShip на экране
         spaceShipLayer.position = CGPoint(x: 0, y: 0)
@@ -147,6 +157,36 @@ class GameScene: SKScene {
         let enemySequence = SKAction.sequence([enemyAction, enemyWaitDuration])
         let enemyRepeatSpawn = SKAction.repeatForever(enemySequence)
         run(enemyRepeatSpawn, withKey: "SpawnEnemy")
+    }
+    
+    //метод, позволяющий стрелять
+    func playerSpaceShipFire() {
+        let redLaser = SKSpriteNode(imageNamed: "redLaser")
+        
+        redLaser.xScale = 0.8
+        redLaser.yScale = 0.8
+        
+        redLaser.zPosition = 1
+        redLaser.position = CGPoint(x: self.spaceShipLayer.position.x, y: self.spaceShipLayer.position.y)
+        
+        let moveAction = SKAction.move(by: CGVector(dx: 0, dy: 1000), duration: 3)//moveTo(y: self.frame.height + 30, duration: 1)
+        let removeLaser = SKAction.removeFromParent()
+        
+        let laserSequence = SKAction.sequence([moveAction, removeLaser])
+        
+        redLaser.run(SKAction.repeatForever(laserSequence))
+        
+        //создаем физическое тело лазера
+        let redLaserTexture = SKTexture(imageNamed: "redLaser")
+        redLaser.physicsBody = SKPhysicsBody(texture: redLaserTexture, size: redLaser.size)
+        redLaser.physicsBody?.categoryBitMask = CollisionCategories.PlayerLaser.rawValue
+        redLaser.physicsBody?.contactTestBitMask = CollisionCategories.EnemySpaceShip.rawValue | CollisionCategories.Asteroid.rawValue
+        redLaser.physicsBody?.collisionBitMask = CollisionCategories.EnemySpaceShip.rawValue | CollisionCategories.Asteroid.rawValue
+        
+        redLaser.physicsBody?.affectedByGravity = false
+        redLaser.physicsBody?.isDynamic = false
+        
+        redLaserLayer.addChild(redLaser)
     }
     
     override func didMove(to view: SKView) {
@@ -187,6 +227,8 @@ class GameScene: SKScene {
         //Создаем космический корабль
         // инициализируем свойство
         spaceShip = SKSpriteNode(imageNamed: "spaceShip")
+        //spaceShip.xScale = 0.8
+        //spaceShip.yScale = 0.8
         // добавляем
         spaceShip.physicsBody = SKPhysicsBody(texture: spaceShip.texture!, size: spaceShip.size)
         spaceShip.physicsBody?.isDynamic = false
@@ -209,6 +251,11 @@ class GameScene: SKScene {
         spaceShipLayer.position = CGPoint(x: 0, y: 0)
         
         addChild(spaceShipLayer)
+        
+        //создаем слой с лазером
+        redLaserLayer = SKNode()
+        redLaserLayer.zPosition = 4
+        addChild(redLaserLayer)
         
         //создаем огонь
         let fireEmitter = SKEmitterNode(fileNamed: "fire.sks")!
@@ -253,6 +300,11 @@ class GameScene: SKScene {
         resetTheGame()
         
         enemySpawning()
+        
+        _ = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true, block: { (_) in
+            self.playerSpaceShipFire()
+        })
+    
     }
     
     //фоновая музыка
@@ -365,8 +417,8 @@ class GameScene: SKScene {
         asteroid.name = "asteroid"
         
         asteroid.physicsBody?.categoryBitMask = CollisionCategories.Asteroid.rawValue
-        asteroid.physicsBody?.collisionBitMask = CollisionCategories.PlayerSpaceShip.rawValue
-        asteroid.physicsBody?.contactTestBitMask = CollisionCategories.PlayerSpaceShip.rawValue
+        asteroid.physicsBody?.collisionBitMask = CollisionCategories.PlayerSpaceShip.rawValue | CollisionCategories.PlayerLaser.rawValue
+        asteroid.physicsBody?.contactTestBitMask = CollisionCategories.PlayerSpaceShip.rawValue | CollisionCategories.PlayerLaser.rawValue
         
         //asteroid.zPosition = 2
         
@@ -462,6 +514,21 @@ extension GameScene: SKPhysicsContactDelegate {
                 run(hitSoundAction)
             }
         }
+        
+        if contact.bodyA.categoryBitMask == CollisionCategories.PlayerLaser.rawValue && contact.bodyB.categoryBitMask == CollisionCategories.EnemySpaceShip.rawValue ||
+            contact.bodyA.categoryBitMask == CollisionCategories.EnemySpaceShip.rawValue && contact.bodyB.categoryBitMask == CollisionCategories.PlayerLaser.rawValue {
+         
+            contact.bodyA.node?.removeFromParent()
+            contact.bodyB.node?.removeFromParent()
+            
+            //исправляем баг множественного соударения
+            contact.bodyA.categoryBitMask = CollisionCategories.None.rawValue
+            contact.bodyB.categoryBitMask = CollisionCategories.None.rawValue
+            
+            addPoints(points: 5)
+            
+        }
+        
     }
     
     func didEnd(_ contact: SKPhysicsContact) {
