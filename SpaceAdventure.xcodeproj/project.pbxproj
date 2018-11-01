@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B500A9FA218777FB008CAA6E /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = B500A9F9218777FB008CAA6E /* GameSettings.swift */; };
 		B50386E1218B27A400B28EF7 /* EnemySpaceShip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50386E0218B27A400B28EF7 /* EnemySpaceShip.swift */; };
+		B5BE0B10218B516700885F33 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BE0B0F218B516700885F33 /* StartViewController.swift */; };
 		B5CEE61F217770A0003C0B0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CEE61E217770A0003C0B0D /* AppDelegate.swift */; };
 		B5CEE621217770A0003C0B0D /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = B5CEE620217770A0003C0B0D /* GameScene.sks */; };
 		B5CEE623217770A0003C0B0D /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = B5CEE622217770A0003C0B0D /* Actions.sks */; };
@@ -28,6 +29,7 @@
 /* Begin PBXFileReference section */
 		B500A9F9218777FB008CAA6E /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
 		B50386E0218B27A400B28EF7 /* EnemySpaceShip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnemySpaceShip.swift; sourceTree = "<group>"; };
+		B5BE0B0F218B516700885F33 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
 		B5CEE61B217770A0003C0B0D /* SpaceAdventure.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceAdventure.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5CEE61E217770A0003C0B0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5CEE620217770A0003C0B0D /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				B5CEE61E217770A0003C0B0D /* AppDelegate.swift */,
 				B5CEE638217E1D27003C0B0D /* stars.sks */,
 				B5CEE639217E1D27003C0B0D /* Assets.xcassets */,
+				B5BE0B0F218B516700885F33 /* StartViewController.swift */,
 				B5CEE620217770A0003C0B0D /* GameScene.sks */,
 				B5CEE622217770A0003C0B0D /* Actions.sks */,
 				B5CEE624217770A0003C0B0D /* GameScene.swift */,
@@ -175,6 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5CEE625217770A0003C0B0D /* GameScene.swift in Sources */,
+				B5BE0B10218B516700885F33 /* StartViewController.swift in Sources */,
 				B5CEE641217E3601003C0B0D /* PauseViewController.swift in Sources */,
 				B500A9FA218777FB008CAA6E /* GameSettings.swift in Sources */,
 				B5CEE627217770A0003C0B0D /* GameViewController.swift in Sources */,

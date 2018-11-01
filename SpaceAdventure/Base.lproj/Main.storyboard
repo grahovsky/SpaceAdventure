@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="DLT-Vh-lWa">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,6 +9,71 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Start View Controller-->
+        <scene sceneID="7ZI-Od-apk">
+            <objects>
+                <viewController id="DLT-Vh-lWa" customClass="StartViewController" customModule="SpaceAdventure" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Zex-I0-BC4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="S5h-vN-dl7">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Space Adventure" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xJJ-LU-QrM">
+                                <rect key="frame" x="0.0" y="61" width="375" height="76"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="xJJ-LU-QrM" secondAttribute="height" multiplier="173:35" id="1FK-XN-cfJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Copperplate-Bold" family="Copperplate" pointSize="34"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5bD-XQ-9Lj">
+                                <rect key="frame" x="121.5" y="267.5" width="132" height="132"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="5bD-XQ-9Lj" secondAttribute="height" multiplier="1:1" id="fle-XF-mmQ"/>
+                                </constraints>
+                                <state key="normal" image="tap"/>
+                                <connections>
+                                    <action selector="startButtonPressed:" destination="DLT-Vh-lWa" eventType="touchUpInside" id="nIJ-8d-d7T"/>
+                                    <segue destination="BV1-FR-VrT" kind="show" id="ruw-2d-s3p"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="crown" translatesAutoresizingMaskIntoConstraints="NO" id="5LE-iL-Gt0">
+                                <rect key="frame" x="56.5" y="202.5" width="262" height="262"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="5LE-iL-Gt0" secondAttribute="height" multiplier="1:1" id="xfs-dq-pBJ"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="5LE-iL-Gt0" firstAttribute="width" secondItem="S5h-vN-dl7" secondAttribute="height" multiplier="200:667" constant="62" id="4T0-Db-qLv"/>
+                            <constraint firstItem="xJJ-LU-QrM" firstAttribute="width" secondItem="S5h-vN-dl7" secondAttribute="width" multiplier="1:1" id="CD7-rX-qYy"/>
+                            <constraint firstItem="aDE-TH-Ktj" firstAttribute="bottom" secondItem="S5h-vN-dl7" secondAttribute="bottom" id="EzH-Zu-iZi"/>
+                            <constraint firstItem="5LE-iL-Gt0" firstAttribute="centerY" secondItem="S5h-vN-dl7" secondAttribute="centerY" id="Hep-gx-TCy"/>
+                            <constraint firstItem="5bD-XQ-9Lj" firstAttribute="centerX" secondItem="S5h-vN-dl7" secondAttribute="centerX" id="PzN-4t-JfW"/>
+                            <constraint firstItem="5bD-XQ-9Lj" firstAttribute="centerY" secondItem="S5h-vN-dl7" secondAttribute="centerY" id="R89-1a-xRz"/>
+                            <constraint firstItem="5LE-iL-Gt0" firstAttribute="centerX" secondItem="S5h-vN-dl7" secondAttribute="centerX" id="TeL-VA-9U7"/>
+                            <constraint firstItem="5bD-XQ-9Lj" firstAttribute="width" secondItem="S5h-vN-dl7" secondAttribute="height" multiplier="132:667" id="UVz-E4-RPF"/>
+                            <constraint firstItem="aDE-TH-Ktj" firstAttribute="trailing" secondItem="S5h-vN-dl7" secondAttribute="trailing" id="WVd-cJ-dwe"/>
+                            <constraint firstItem="xJJ-LU-QrM" firstAttribute="centerX" secondItem="S5h-vN-dl7" secondAttribute="centerX" id="bkD-Pz-9tx"/>
+                            <constraint firstItem="aDE-TH-Ktj" firstAttribute="top" secondItem="S5h-vN-dl7" secondAttribute="top" constant="20" id="osR-q2-Aig"/>
+                            <constraint firstItem="S5h-vN-dl7" firstAttribute="leading" secondItem="aDE-TH-Ktj" secondAttribute="leading" id="pH4-tk-IYT"/>
+                            <constraint firstItem="S5h-vN-dl7" firstAttribute="top" secondItem="xJJ-LU-QrM" secondAttribute="bottom" constant="-137" id="wvY-vN-Es9"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="aDE-TH-Ktj"/>
+                    </view>
+                    <connections>
+                        <outlet property="crownImageView" destination="5LE-iL-Gt0" id="5C7-88-3FJ"/>
+                        <outlet property="startButton" destination="5bD-XQ-9Lj" id="Vgj-e8-twc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VUa-HW-LP5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-621.60000000000002" y="114.69265367316342"/>
+        </scene>
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
@@ -279,6 +344,8 @@
         <image name="PausedTitle" width="400" height="98"/>
         <image name="PlayButton" width="80" height="80"/>
         <image name="StoreButton" width="80" height="80"/>
+        <image name="background" width="414" height="736"/>
+        <image name="crown" width="200" height="200"/>
         <image name="gameOver" width="552" height="87"/>
         <image name="lifes" width="100" height="100"/>
         <image name="musicImage" width="334.5" height="98"/>
@@ -287,6 +354,7 @@
         <image name="resetBtn" width="80" height="80"/>
         <image name="scores" width="166.5" height="38.5"/>
         <image name="soundImage" width="382" height="93.5"/>
+        <image name="tap" width="200" height="200"/>
         <image name="top" width="80" height="80"/>
         <image name="youHave" width="166.5" height="34"/>
     </resources>
