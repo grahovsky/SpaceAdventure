@@ -22,7 +22,7 @@ enum CollisionCategories: UInt32 {
     case None = 1
     case PlayerSpaceShip = 2
     case Asteroid = 4
-    case EnemyShip = 8
+    case EnemySpaceShip = 8
 }
 
 class GameScene: SKScene {
@@ -35,13 +35,14 @@ class GameScene: SKScene {
     
     var gameOver = false
     var playerWasHit = false
+    var playerIsImmortable: Bool = true
     
     //создаем свойства
     var spaceShip: SKSpriteNode!
     var background: SKSpriteNode!
     
-//    var score = 0
-//    var scoreLabel: SKLabelNode!
+    //    var score = 0
+    //    var scoreLabel: SKLabelNode!
     
     //слой космического корабля
     var spaceShipLayer: SKNode!
@@ -51,6 +52,9 @@ class GameScene: SKScene {
     
     //слой звёзд
     var starsLayer: SKNode!
+    
+    //слой вражеских кораблей
+    var enemyLayer: SKNode!
     
     //индикатор паузы игры
     var gameIsPaused: Bool = false
@@ -78,6 +82,7 @@ class GameScene: SKScene {
         self.asteroidLayer.isPaused = true
         //self.spaceShipLayer.isPaused = true
         self.starsLayer.isPaused = true
+        self.enemyLayer.isPaused = true
         physicsWorld.speed = 0
         
         musicOnOrOff()
@@ -91,6 +96,7 @@ class GameScene: SKScene {
         self.asteroidLayer.isPaused = false
         self.spaceShipLayer.isPaused = false
         self.starsLayer.isPaused = false
+        self.enemyLayer.isPaused = false
         physicsWorld.speed = 1
         
         musicOnOrOff()
@@ -99,8 +105,8 @@ class GameScene: SKScene {
     
     func resetTheGame() {
         
-//        score = 0
-//        scoreLabel.text = "Score: \(self.score)"
+        //        score = 0
+        //        scoreLabel.text = "Score: \(self.score)"
         
         gameSettings.resetCurrentScore()
         gameDelegate?.gameDelegateReset()
@@ -117,14 +123,30 @@ class GameScene: SKScene {
     }
     
     func respawn() {
-
+        
         unpauseTheGame()
         playerWasHit = false
         asteroidLayer.removeAllChildren()
-
+        
         // определяем позицию spaceShip на экране
         spaceShipLayer.position = CGPoint(x: 0, y: 0)
         
+    }
+    
+    func enemySpawning() {
+       
+        let enemyAction = SKAction.run {
+            
+            let enemySpaceShip = EnemySpaceShip()
+            self.enemyLayer.addChild(enemySpaceShip)
+            enemySpaceShip.fly()
+            
+        }
+        
+        let enemyWaitDuration = SKAction.wait(forDuration: 10, withRange: 2)
+        let enemySequence = SKAction.sequence([enemyAction, enemyWaitDuration])
+        let enemyRepeatSpawn = SKAction.repeatForever(enemySequence)
+        run(enemyRepeatSpawn, withKey: "SpawnEnemy")
     }
     
     override func didMove(to view: SKView) {
@@ -156,6 +178,12 @@ class GameScene: SKScene {
         starsLayer.addChild(starsEmitter)
         addChild(starsLayer)
         
+        //слой вражескихкораблей
+        enemyLayer = SKNode()
+        enemyLayer.zPosition = 3
+        addChild(enemyLayer)
+
+        
         //Создаем космический корабль
         // инициализируем свойство
         spaceShip = SKSpriteNode(imageNamed: "spaceShip")
@@ -176,7 +204,7 @@ class GameScene: SKScene {
         //создаем слой космического корабля
         spaceShipLayer = SKNode()
         spaceShipLayer.addChild(spaceShip)
-        spaceShipLayer.zPosition = 3
+        spaceShipLayer.zPosition = 5
         spaceShip.zPosition = 1
         spaceShipLayer.position = CGPoint(x: 0, y: 0)
         
@@ -206,15 +234,15 @@ class GameScene: SKScene {
         
         self.asteroidLayer.run(asteroidRunAction)
         
-//        scoreLabel = SKLabelNode(text: "Score: \(score)")
-//        scoreLabel.fontSize = 30
-//        scoreLabel.fontName = "Futura"
-//        scoreLabel.fontColor = #colorLiteral(red: 0.7655060279, green: 0.3717384464, blue: 0.1646142797, alpha: 1)
-//        scoreLabel.position = CGPoint(x: 0, y: frame.size.height/2 - scoreLabel.calculateAccumulatedFrame().height - 15)
-//        addChild(scoreLabel)
+        //        scoreLabel = SKLabelNode(text: "Score: \(score)")
+        //        scoreLabel.fontSize = 30
+        //        scoreLabel.fontName = "Futura"
+        //        scoreLabel.fontColor = #colorLiteral(red: 0.7655060279, green: 0.3717384464, blue: 0.1646142797, alpha: 1)
+        //        scoreLabel.position = CGPoint(x: 0, y: frame.size.height/2 - scoreLabel.calculateAccumulatedFrame().height - 15)
+        //        addChild(scoreLabel)
         
         background.zPosition = 0
-//        scoreLabel.zPosition = 4
+        //        scoreLabel.zPosition = 4
         
         gameSettings = GameSettings()
         
@@ -224,6 +252,7 @@ class GameScene: SKScene {
         playMusic()
         resetTheGame()
         
+        enemySpawning()
     }
     
     //фоновая музыка
@@ -364,8 +393,8 @@ class GameScene: SKScene {
             if asteroid.position.y < -(self.frame.size.height/2 + asteroid.calculateAccumulatedFrame().height) {
                 asteroid.removeFromParent()
                 
-//                self.score += 1
-//                self.scoreLabel.text = "Score: \(self.score)"
+                //                self.score += 1
+                //                self.scoreLabel.text = "Score: \(self.score)"
                 self.addPoints(points: 1)
                 
             }
@@ -385,52 +414,53 @@ extension GameScene: SKPhysicsContactDelegate {
         
         if contact.bodyA.categoryBitMask == CollisionCategories.PlayerSpaceShip.rawValue && contact.bodyB.categoryBitMask == CollisionCategories.Asteroid.rawValue ||
             contact.bodyA.categoryBitMask == CollisionCategories.Asteroid.rawValue && contact.bodyB.categoryBitMask == CollisionCategories.PlayerSpaceShip.rawValue {
-        }
-        
-        if !gameOver && !playerWasHit {
-        
-            self.playerWasHit = true
             
-            self.pauseTheGame()
             
-            //определяем анимацию столкновения с астероидом
-            let fadeOutAction = SKAction.fadeOut(withDuration: 0.1)
-            fadeOutAction.timingMode = SKActionTimingMode.easeOut
-            
-            let fadeInAction = SKAction.fadeIn(withDuration: 0.1)
-            fadeInAction.timingMode = SKActionTimingMode.easeOut
-            
-            let blinkAction = SKAction.sequence([fadeOutAction, fadeInAction])
-            let blinkRepeatAction = SKAction.repeat(blinkAction, count: 3)
-            
-            let delayAction = SKAction.wait(forDuration: 0.2)
-            
-            let gameOverAction = SKAction.run {
+            if !gameOver && !playerWasHit && !playerIsImmortable{
                 
-                self.gameSettings.lives -= 1
-                self.gameDelegate?.gameDelegateDidUpdateLives()
+                self.playerWasHit = true
                 
-                if self.gameSettings.lives > 0 {
-                    self.respawn()
-                } else
-                {
-                    self.gameSettings.recordScores(score: self.gameSettings.currentScore)
-                    self.gameDelegate?.gameDelegateGameOver(score: self.gameSettings.currentScore)
-                    self.spaceShipLayer.isPaused = true
-                    self.gameOver = true
-                    self.pauseTheGame()
+                self.pauseTheGame()
+                
+                //определяем анимацию столкновения с астероидом
+                let fadeOutAction = SKAction.fadeOut(withDuration: 0.1)
+                fadeOutAction.timingMode = SKActionTimingMode.easeOut
+                
+                let fadeInAction = SKAction.fadeIn(withDuration: 0.1)
+                fadeInAction.timingMode = SKActionTimingMode.easeOut
+                
+                let blinkAction = SKAction.sequence([fadeOutAction, fadeInAction])
+                let blinkRepeatAction = SKAction.repeat(blinkAction, count: 3)
+                
+                let delayAction = SKAction.wait(forDuration: 0.2)
+                
+                let gameOverAction = SKAction.run {
+                    
+                    self.gameSettings.lives -= 1
+                    self.gameDelegate?.gameDelegateDidUpdateLives()
+                    
+                    if self.gameSettings.lives > 0 {
+                        self.respawn()
+                    } else
+                    {
+                        self.gameSettings.recordScores(score: self.gameSettings.currentScore)
+                        self.gameDelegate?.gameDelegateGameOver(score: self.gameSettings.currentScore)
+                        self.spaceShipLayer.isPaused = true
+                        self.gameOver = true
+                        self.pauseTheGame()
+                    }
                 }
+                
+                let gameOverSequence = SKAction.sequence([blinkRepeatAction, delayAction, gameOverAction])
+                spaceShipLayer.run(gameOverSequence)
+                
             }
             
-            let gameOverSequence = SKAction.sequence([blinkRepeatAction, delayAction, gameOverAction])
-            spaceShipLayer.run(gameOverSequence)
             
-        }
-        
-        
-        if soundOn {
-            let hitSoundAction = SKAction.playSoundFileNamed("hitSound", waitForCompletion: true)
-            run(hitSoundAction)
+            if soundOn {
+                let hitSoundAction = SKAction.playSoundFileNamed("hitSound", waitForCompletion: true)
+                run(hitSoundAction)
+            }
         }
     }
     
